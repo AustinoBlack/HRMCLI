@@ -10,19 +10,6 @@ def clear_screen():
     """Clears the terminal screen."""
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def show_help():
-    """Displays a list of available commands."""
-    help_text = """
-    Cluster CLI Commands:
-    - clear      : Clears the screen
-    - exit       : Exits the CLI
-    - help       : Displays this help message
-    - version    : Displays the CLI version
-    - cluster setpoweron -i <node_id> : Power on a specific node
-    - cluster setpoweroff -i <node_id> : Power off a specific node
-    """
-    print(help_text)
-
 def show_version():
     """Displays the CLI version."""
     print("\nCluster CLI Version " + VERSION + "\n")
