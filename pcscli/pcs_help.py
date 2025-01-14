@@ -35,7 +35,7 @@ def show_help(prefix, command):
         prefix (str): The command prefix (e.g., pcscli, sh, set).
         command (str): The specific command to show help for.
     """
-    print(str(prefix) + " " + str( command ) )
+    
     if prefix == "pcscli":
         if command == "-help":
             pcscli_general_help()
@@ -52,10 +52,36 @@ def show_help(prefix, command):
 
 
 def pcscli_general_help():
-    print("pcscli general help")
+    print("""
+PcsCli General Help:
+========================================================
+This command will provide a list of operation commands
+available under the the "pcscli prefix"
+
+Syntax: pcscli [operation] {-help}
+
+-help  Displays the help message for the given operation 
+       command.
+
+List of avaiable operations:
+- setpoweron
+- setpoweroff
+""")
 
 def setpoweron_help():
-    print("set power on help")
+    print("""
+PcsCli Command: setpoweron
+========================================================
+This command sends an ipmi signal to turn the blade on.
+
+Syntax: pcscli setpoweron {-help} <-i ID>
+
+-i     Blade ID [1 - n]
+-help  Displays this help message.
+
+Sample Usage:
+pcscli setpoweron -i 1
+""")
 
 def sh_general_help():
     print("sh general help")
