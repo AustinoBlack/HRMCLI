@@ -41,7 +41,11 @@ def show_help(prefix, command):
             pcscli_general_help()
         elif command == "setpoweron":
             setpoweron_help()
-
+        elif command == "setpoweroff":
+            setpoweroff_help()
+        else:
+            print(f"*** Unknown command: {prefix} {command}. Type 'pcscli -help' for a list of pcscli commands.")
+    
     elif prefix == "sh":
         if command == "-help":
             sh_general_help()
@@ -49,7 +53,6 @@ def show_help(prefix, command):
     elif prefix == "set":
         if command == "-help":
             set_general_help()
-
 
 def pcscli_general_help():
     print("""
@@ -81,6 +84,21 @@ Syntax: pcscli setpoweron {-help} <-i ID>
 
 Sample Usage:
 pcscli setpoweron -i 1
+""")
+
+def setpoweroff_help():
+    print("""
+PcsCli Command: setpoweroff
+========================================================
+This command sends an ipmi signal to turn the blade on.
+
+Syntax: pcscli setpoweroff {-help} <-i ID>
+
+-i     Blade ID [1 - n]
+-help  Displays this help message.
+
+Sample Usage:
+pcscli setpoweroff -i 1
 """)
 
 def sh_general_help():
