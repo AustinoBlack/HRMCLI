@@ -49,6 +49,12 @@ def show_help(prefix, command):
     elif prefix == "sh":
         if command == "-help":
             sh_general_help()
+        elif command == "sys info":
+            sysinfo_help()
+        elif command == "sys fru":
+            sysfru_help()
+        else:
+            print(f"*** Unknown command: {prefix} {command}. Type 'sh -help' for a list of sh commands.")
 
     elif prefix == "set":
         if command == "-help":
