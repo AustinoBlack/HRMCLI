@@ -56,7 +56,7 @@ def show_help(prefix, command):
 
 def pcscli_general_help():
     print("""
-PcsCli General Help:
+'pcscli' General Help:
 ========================================================
 This command will provide a list of operation commands
 available under the the "pcscli prefix"
@@ -102,7 +102,36 @@ pcscli setpoweroff -i 1
 """)
 
 def sh_general_help():
-    print("sh general help")
+    print("""
+'show' General Help:
+========================================================
+This command will provide a list of operation commands
+available under the the "sh prefix"
+
+Syntax: sh [operation] {-help}
+
+-help  Displays the help message for the given operation 
+       command.
+
+List of avaiable operations:
+- sys info
+- sys fru
+""")
 
 def set_general_help():
-    print("set general help")
+    print("""
+'set' General Help:
+========================================================
+This command will provide a list of operation commands
+available under the the "set prefix"
+
+Syntax: set [operation] {-help}
+
+-help  Displays the help message for the given operation 
+       command.
+
+List of avaiable operations:
+- sys led on
+- sys led off
+- sys sel clear
+""")
