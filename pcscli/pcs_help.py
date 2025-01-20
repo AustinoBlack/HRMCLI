@@ -118,6 +118,36 @@ List of avaiable operations:
 - sys fru
 """)
 
+def sysinfo_help():
+    print("""
+'Show' Command: sys info 
+========================================================
+This command prints the systems information by given node index
+
+Syntax: sh sys info {-help} <-i ID>
+
+-i     Blade ID [1 - n]
+-help  Displays this help message.
+
+Sample Usage:
+sh sys info -i 1
+""")
+
+def sysfru_help():
+    print("""
+'Show' Command: sys fru 
+========================================================
+This command prints the systems fru information by given node index
+
+Syntax: sh sys fru {-help} <-i ID>
+
+-i     Blade ID [1 - n]
+-help  Displays this help message.
+
+Sample Usage:
+sh sys fru -i 1
+""")
+    
 def set_general_help():
     print("""
 'set' General Help:
