@@ -1,4 +1,5 @@
 from pcs_help import show_help
+from pcs_action import execute_command
 
 def parse_command(user_input):
     """
@@ -22,14 +23,15 @@ def parse_command(user_input):
     # Handle prefix commands like pcscli, sh, set
     if command in ("pcscli", "sh", "set"):
         prefix = command
-        if len(args) >= 1 and args[-1] == "-help":
-            from pcs_help import show_help
-            specific_command = args[0] if len(args) > 0 else None
+        if len(args) > 1 and args[-1] == "-help":
+            specific_command = " ".join(args[:-1])
             show_help(prefix, specific_command)
+            return
+        elif len(args) == 1 and args[-1] == "-help":
+            show_help(prefix, "-help")
             return
 
         # Pass to command execution
-        from pcs_action import execute_command
         execute_command(prefix, args)
         return
 
