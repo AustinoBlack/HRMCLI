@@ -182,10 +182,46 @@ List of avaiable operations:
 """)
 
 def ledon_help():
-    print("led on help msg")
+    print("""
+'Set' Command: sys led on
+========================================================
+This command turns on the chassis attention led by given node index
+
+Syntax: sh sys led on {-help} <-i ID>
+
+-i     Blade ID [1 - n]
+-help  Displays this help message.
+
+Sample Usage:
+sh sys led on -i 1
+""")
 
 def ledoff_help():
-    print("led off help msg")
+    print("""
+'Set' Command: sys led off
+========================================================
+This command turns off the chassis attention led by given node index
+
+Syntax: sh sys led on {-help} <-i ID>
+
+-i     Blade ID [1 - n]
+-help  Displays this help message.
+
+Sample Usage:
+sh sys led off -i 1
+""")
 
 def selclear_help():
-    print("sel clear help msg")
+    print("""
+'Set' Command: sys sel clear
+========================================================
+This command clears the nodes SEL log by given node index
+
+Syntax: sh sys sel clear {-help} <-i ID>
+
+-i     Blade ID [1 - n]
+-help  Displays this help message.
+
+Sample Usage:
+sh sys sel clear -i 1
+""")
