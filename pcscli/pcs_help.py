@@ -60,6 +60,12 @@ def show_help(prefix, command):
     elif prefix == "set":
         if command == "-help":
             set_general_help()
+        elif command == "sys led on":
+            ledon_help()
+        elif command == "sys led off":
+            ledoff_help()
+        elif command == "sys sel clear":
+            selclear_help()
         else:
             print(f"*** Unknown command: {prefix} {command}. Type 'set -help' for a list of set commands.")
 
@@ -174,3 +180,12 @@ List of avaiable operations:
 - sys led off
 - sys sel clear
 """)
+
+def ledon_help():
+    print("led on help msg")
+
+def ledoff_help():
+    print("led off help msg")
+
+def selclear_help():
+    print("sel clear help msg")
