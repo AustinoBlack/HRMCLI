@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 import readline
 
 from pcs_parse import parse_command
@@ -28,15 +29,17 @@ def main():
                 readline.add_history(user_input)
                 if user_input == "clear":
                     clear_screen()
-                elif user_input == "exit": 
-                    print("Exiting PCSCLI. Goodbye!") 
+                elif user_input == "exit" or user_input == "quit": 
+                    print("Exiting PCSCLI...") 
+                    time.sleep(2)
                     break
                 else:
                     parsed_command = parse_command(user_input)
             else:
                 continue 
         except (KeyboardInterrupt, EOFError):
-            print("\nExiting Cluster CLI...")
+            print("\nExiting PCSCLI...")
+            time.sleep(2)
             break
 
     # Save history to file
