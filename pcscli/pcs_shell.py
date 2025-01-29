@@ -9,6 +9,33 @@ from datetime import datetime
 
 VERSION = "0.1"
 
+COMMANDS = {
+    "pcscli": ["setpoweron", "setpoweroff", "reset", "status"],
+    "sh": ["sys", "bios", "code"],
+    "set": ["sys", "boot", "led", "fru"],
+    "help": [],
+    "clear": [],
+    "exit": []
+}
+
+def complete(text, state):
+    """Tab autocomplete function. Suggests commands based on user input."""
+    buffer = readline.get_line_buffer().split()
+    if len(buffer) == 1:
+        options = [cmd for cmd in COMMANDS.keys() if cmd.startswith(text)]
+    elif len(buffer) > 1 and buffer[0] in COMMANDS:
+        options = [sub for sub in COMMANDS[buffer[0]] if sub.startswith(text)]
+    else:
+        options = []
+
+    return options[state] if state < len(options) else None
+
+def setup_readline():
+    """Enable tab completion and command history."""
+    readline.parse_and_bind("tab: complete") # Bind the tab key
+    readline.set_completer(complete)
+    readline.set_completer_delims(" ")
+
 def get_last_login(username):
     try:
         # Run the 'last' command to get login history
@@ -29,6 +56,7 @@ def clear_screen():
 
 def main():
     clear_screen()
+    setup_readline()
     
     # Display last login and welcome message [ascii graphic?]
     username = os.getenv("USER", "user")
@@ -58,7 +86,7 @@ def main():
                 else:
                     parsed_command = parse_command(user_input)
             else:
-                continue 
+                print("PcsCli# ", end="", flush=True) 
         except (KeyboardInterrupt, EOFError):
             print("\nExiting PCSCLI...")
             time.sleep(2)
