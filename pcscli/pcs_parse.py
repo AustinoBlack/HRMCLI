@@ -27,13 +27,15 @@ def parse_command(user_input):
             specific_command = " ".join(args[:-1])
             show_help(prefix, specific_command)
             return
+
         elif len(args) == 1 and args[-1] == "-help":
             show_help(prefix, "-help")
             return
 
-        # Pass to command execution
-        execute_command(prefix, args)
-        return
+        elif args[-1] == "1" or args[-1] == "2":
+            command = "".join(args[:-2])
+            execute_command(prefix, command, args[-1])
+            return
 
     print(f"Unknown command: {command}. Type 'help' for a list of commands.")
 

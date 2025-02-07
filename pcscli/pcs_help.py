@@ -35,7 +35,7 @@ def show_help(prefix, command):
         prefix (str): The command prefix (e.g., pcscli, sh, set).
         command (str): The specific command to show help for.
     """
-    print(f"Entered: Prefix: {prefix}, command: {command}" )
+    #print(f"Entered: Prefix: {prefix}, command: {command}" )
     
     if prefix == "pcscli":
         if command == "-help":
