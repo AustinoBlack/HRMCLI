@@ -7,6 +7,19 @@ import subprocess
 from pcs_parse import parse_command
 from datetime import datetime
 
+LOGO = """
+
+██████╗  ██████╗███████╗ ██████╗██╗     ██╗
+██╔══██╗██╔════╝██╔════╝██╔════╝██║     ██║
+██████╔╝██║     ███████╗██║     ██║     ██║
+██╔═══╝ ██║     ╚════██║██║     ██║     ██║
+██║     ╚██████╗███████║╚██████╗███████╗██║
+╚═╝      ╚═════╝╚══════╝ ╚═════╝╚══════╝╚═╝
+                                           
+Proxmox Cluster Service Command Line Interface
+----------------------------------------------
+"""
+
 VERSION = "0.1"
 
 COMMANDS = {
@@ -57,13 +70,19 @@ def clear_screen():
 def main():
     clear_screen()
     setup_readline()
+   
+    # Startup Sequence
+    print("starting PCSCLI...")
+    time.sleep(2)
+    clear_screen()
+    print(LOGO) 
     
     # Display last login and welcome message [ascii graphic?]
     username = os.getenv("USER", "user")
     last_login_message = get_last_login(username)
     print(last_login_message)
     time.sleep(2)
-    print("Welcome to the Cluster CLI!")
+    print("Enter 'help' to get started\n")
 
     # Enable history file
     history_file = ".pcscli_history"
@@ -82,6 +101,7 @@ def main():
                 elif user_input == "exit" or user_input == "quit": 
                     print("Exiting PCSCLI...") 
                     time.sleep(2)
+                    clear_screen()
                     break
                 else:
                     parsed_command = parse_command(user_input)
@@ -90,6 +110,7 @@ def main():
         except (KeyboardInterrupt, EOFError):
             print("\nExiting PCSCLI...")
             time.sleep(2)
+            clear_screen()
             break
 
     # Save history to file
