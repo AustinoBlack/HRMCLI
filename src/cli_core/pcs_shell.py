@@ -65,7 +65,7 @@ def main():
     time.sleep(2)
     print("Welcome to the Cluster CLI!")
 
-    # Enable history file (optional: make persistent across sessions)
+    # Enable history file
     history_file = ".pcscli_history"
     try:
         readline.read_history_file(history_file)
