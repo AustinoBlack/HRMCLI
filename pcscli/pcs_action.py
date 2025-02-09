@@ -38,7 +38,7 @@ def execute_command(prefix, command, node_index):
 
 def setpoweron(node_index):
     print(f"Executing setpoweron on node {node_index}")
-    ipmi_command = f"ipmitool -I lanplus -H 172.16.0.2 -U ADMIN -P SJCUKYTBYI power on"
+    ipmi_command = f"ipmitool -I lanplus -H 172.16.0.3 -U ADMIN -P ADMIN power on"
     
     try:
         result = subprocess.run(ipmi_command, shell=True, capture_output=True, text=True)
