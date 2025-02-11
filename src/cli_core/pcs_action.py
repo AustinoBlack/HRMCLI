@@ -58,6 +58,7 @@ def setpoweron(node_index):
         print(f"Error: No data found for node {node_index}")
         return
 
+    # created ipmi command
     ipmi_command = [
         "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "power", "on"
     ]
@@ -84,6 +85,7 @@ def setpoweroff(node_index):
         print(f"Error: No data found for node {node_index}")
         return
 
+    # created ipmi command
     ipmi_command = [
         "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "power", "off"
     ]
@@ -99,16 +101,31 @@ def setpoweroff(node_index):
         print(f"Exception occurred: {str(e)}")
 
 def sys_info(node_index):
+    """
+    Prints system Firmware for a node by a given index
+    """
     print(f"Retrieving system info for node {node_index}")
 
 def sys_fru(node_index):
+    """
+    Prints all Field Replaceable Units for a node by a given index
+    """
     print(f"Retrieving FRU data for node {node_index}")
 
 def sys_led_on(node_index):
+    """
+    Turns the chassis' attention led on for a node by a given index
+    """
     print(f"Turning LED on for node {node_index}")
 
 def sys_led_off(node_index):
+    """
+    Turns the chassis' attention led off for a node by a given index
+    """
     print(f"Turning LED off for node {node_index}")
 
 def sys_sel_clear(node_index):
+    """ 
+    Clears the SEL( System Event Log ) for a node by a given index
+    """
     print(f"Clearing SEL log for node {node_index}")
