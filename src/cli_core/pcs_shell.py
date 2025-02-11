@@ -16,7 +16,7 @@ LOGO = """
 ██║     ╚██████╗███████║╚██████╗███████╗██║
 ╚═╝      ╚═════╝╚══════╝ ╚═════╝╚══════╝╚═╝
                                            
-Proxmox Cluster Service Command Line Interface
+Proxmox Control Server Command Line Interface
 ----------------------------------------------
 """
 
