@@ -118,7 +118,7 @@ def sys_led_on(node_index):
     """
     print(f"Turning LED on for node {node_index}")
 
-# setup ipmi command
+    # setup ipmi command
     node_data = CONFIG["nodes"].get(str(node_index))
     if not node_data:
         print(f"Error: No data found for node {node_index}")
@@ -144,6 +144,27 @@ def sys_led_off(node_index):
     Turns the chassis' attention led off for a node by a given index
     """
     print(f"Turning LED off for node {node_index}")
+
+    # setup ipmi command
+    node_data = CONFIG["nodes"].get(str(node_index))
+    if not node_data:
+        print(f"Error: No data found for node {node_index}")
+        return
+
+    # created ipmi command # TODO: NEEDS REVIEW
+    ipmi_command = [ 
+        "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "chassis", "identify", "0"
+    ]   
+    
+    # try running the created ipmitool command
+    try:
+        result = subprocess.run(ipmi_command, capture_output=True, text=True)
+        if result.returncode == 0:
+            print(f"Node {node_index}'s attention led turned off successfully.")
+        else:
+            print(f"Error turning node {node_index}'s attention led off: {result.stderr}")
+    except Exception as e:
+        print(f"Exception occurred: {str(e)}")
 
 def sys_sel_clear(node_index):
     """ 
