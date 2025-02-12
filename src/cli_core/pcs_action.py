@@ -134,6 +134,27 @@ def sys_fru(node_index):
     """
     print(f"Retrieving FRU data for node {node_index}")
 
+    # setup ipmi command
+    node_data = CONFIG["nodes"].get(str(node_index))
+    if not node_data:
+        print(f"Error: No data found for node {node_index}")
+        return
+
+    # created ipmi command # TODO: NEEDS REVIEW
+    ipmi_command = [ 
+        "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "fru", "print"
+    ]   
+    
+    # try running the created ipmitool command
+    try:
+        result = subprocess.run(ipmi_command, capture_output=True, text=True)
+        if result.returncode == 0:
+            print(f"Node {node_index}'s Field Replaceable Unit data retrieved successfully.")
+        else:
+            print(f"Error retrieving node {node_index}'s Field Replaceable Unit data: {result.stderr}")
+    except Exception as e:
+        print(f"Exception occurred: {str(e)}")
+
 def sys_led_on(node_index):
     """
     Turns the chassis' attention led on for a node by a given index
