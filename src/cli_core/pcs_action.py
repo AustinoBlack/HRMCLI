@@ -33,6 +33,8 @@ def execute_command(prefix, command, node_index):
             sys_info(node_index)
         elif command == "sysfru":
             sys_fru(node_index)
+        elif command == "syssel":
+            sys_sel(node_index)
         else:
             print(f"*** Unknown command: {prefix} {command}. Type 'sh -help' for a list of sh commands.")
 
@@ -208,6 +210,12 @@ def sys_led_off(node_index):
             print(f"Error turning node {node_index}'s attention led off: {result.stderr}")
     except Exception as e:
         print(f"Exception occurred: {str(e)}")
+
+def sys_sel(node_index):
+    """
+    Prints the SEL( System Event Log ) for a node by a given index
+    """
+    print(f"Retrieving SEL info for node {node_index}")
 
 def sys_sel_clear(node_index):
     """ 
