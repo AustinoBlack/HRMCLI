@@ -20,7 +20,7 @@ Proxmox Control Server Command Line Interface
 ----------------------------------------------
 """
 
-VERSION = "0.1"
+VERSION = "0.5"
 
 COMMANDS = {
     "pcscli": ["setpoweron", "setpoweroff", "reset", "status"],
@@ -64,7 +64,7 @@ def get_last_login(username):
         return "Unable to fetch last login information."
 
 def clear_screen():
-    """Clears the terminal screen."""
+    """Clears the terminal screen"""
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def main():
@@ -98,6 +98,7 @@ def main():
                 readline.add_history(user_input)
                 if user_input == "clear":
                     clear_screen()
+                    print(LOGO)
                 elif user_input == "exit" or user_input == "quit": 
                     print("Exiting PCSCLI...") 
                     time.sleep(2)
