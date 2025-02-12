@@ -106,6 +106,28 @@ def sys_info(node_index):
     """
     print(f"Retrieving system info for node {node_index}")
 
+    # setup ipmi command
+    node_data = CONFIG["nodes"].get(str(node_index))
+    if not node_data:
+        print(f"Error: No data found for node {node_index}")
+        return
+
+    # created ipmi command # TODO: NEEDS REVIEW
+    ipmi_command = [ 
+        "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "mc", "info"
+    ]   
+    
+    # try running the created ipmitool command
+    try:
+        result = subprocess.run(ipmi_command, capture_output=True, text=True)
+        if result.returncode == 0:
+            print(f"Node {node_index}'s info retrived successfully.")
+        else:
+            print(f"Error retrieving node {node_index}'s info: {result.stderr}")
+    except Exception as e:
+        print(f"Exception occurred: {str(e)}")
+
+
 def sys_fru(node_index):
     """
     Prints all Field Replaceable Units for a node by a given index
@@ -171,3 +193,25 @@ def sys_sel_clear(node_index):
     Clears the SEL( System Event Log ) for a node by a given index
     """
     print(f"Clearing SEL log for node {node_index}")
+
+    # setup ipmi command
+    node_data = CONFIG["nodes"].get(str(node_index))
+    if not node_data:
+        print(f"Error: No data found for node {node_index}")
+        return
+
+    # created ipmi command # TODO: NEEDS REVIEW
+    ipmi_command = [ 
+        "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "sel", "clear"
+    ]   
+    
+    # try running the created ipmitool command
+    try:
+        result = subprocess.run(ipmi_command, capture_output=True, text=True)
+        if result.returncode == 0:
+            print(f"Node {node_index}'s System Event Log has been cleared successfully.")
+        else:
+            print(f"Error clearing node {node_index}'s System Event Log: {result.stderr}")
+    except Exception as e:
+        print(f"Exception occurred: {str(e)}")
+
