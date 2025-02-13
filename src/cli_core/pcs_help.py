@@ -56,6 +56,8 @@ def show_help(prefix, command):
             sysfru_help()
         elif command == "sys sel":
             syssel_help()
+        elif comand == "sys sdr":
+            syssdr_help()
         else:
             print(f"*** Unknown command: {prefix} {command}. Type 'sh -help' for a list of sh commands.")
 
@@ -178,6 +180,21 @@ Syntax: sh sys sel {-help} <-i ID>
 
 Sample Usage:
 sh sys sel -i 1
+""")
+
+def syssdr_help():
+    print("""
+'Show' Command: sys sdr
+========================================================
+This command prints the nodes SDR by given node index
+
+Syntax: sh sys sdr {-help} <-i ID>
+
+-i     Blade ID [1 - n]
+-help  Displays this help message.
+
+Sample Usage:
+sh sys sdr -i 1    
 """)
 
 def set_general_help():
