@@ -35,6 +35,8 @@ def execute_command(prefix, command, node_index):
             sys_fru(node_index)
         elif command == "syssel":
             sys_sel(node_index)
+        elif command == "syssdr":
+            sys_sdr(node_index)
         else:
             print(f"*** Unknown command: {prefix} {command}. Type 'sh -help' for a list of sh commands.")
 
@@ -244,3 +246,8 @@ def sys_sel_clear(node_index):
     except Exception as e:
         print(f"Exception occurred: {str(e)}")
 
+def sys_sdr(node_index):
+    """
+    Prints the SDR( Sensor Data Record ) for a node by a given index
+    """
+    print(f"Retrieving SDR info for node {node_index}")
