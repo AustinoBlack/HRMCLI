@@ -18,7 +18,7 @@ def execute_command(prefix, command, node_index):
         prefix (str): The prefix of the command (e.g., pcscli, sh, set).
         args (list): List of arguments for the command.
     """
-    print(f"Executing: Prefix='{prefix}', Command='{command}', Index='{node_index}'")
+    # print(f"Executing: Prefix='{prefix}', Command='{command}', Index='{node_index}'")  # DEBUG
 
     if prefix == "pcscli":
         if command == "setpoweron":
@@ -219,6 +219,27 @@ def sys_sel(node_index):
     """
     print(f"Retrieving SEL info for node {node_index}")
 
+    # setup ipmi command
+    node_data = CONFIG["nodes"].get(str(node_index))
+    if not node_data:
+        print(f"Error: No data found for node {node_index}")
+        return
+
+    # created ipmi command # TODO: NEEDS REVIEW
+    ipmi_command = [ 
+        "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "sel", "elist"
+    ]   
+    
+    # try running the created ipmitool command
+    try:
+        result = subprocess.run(ipmi_command, capture_output=True, text=True)
+        if result.returncode == 0:
+            print(f"Node {node_index}'s System Event Log has been retrieved successfully.")
+        else:
+            print(f"Error retrieving node {node_index}'s System Event Log: {result.stderr}")
+    except Exception as e:
+        print(f"Exception occurred: {str(e)}")
+
 def sys_sel_clear(node_index):
     """ 
     Clears the SEL( System Event Log ) for a node by a given index
@@ -251,3 +272,24 @@ def sys_sdr(node_index):
     Prints the SDR( Sensor Data Record ) for a node by a given index
     """
     print(f"Retrieving SDR info for node {node_index}")
+
+    # setup ipmi command
+    node_data = CONFIG["nodes"].get(str(node_index))
+    if not node_data:
+        print(f"Error: No data found for node {node_index}")
+        return
+
+    # created ipmi command # TODO: NEEDS REVIEW
+    ipmi_command = [
+        "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "sdr", "list"
+    ]
+
+    # try running the created ipmitool command
+    try:
+        result = subprocess.run(ipmi_command, capture_output=True, text=True)
+        if result.returncode == 0:
+            print(f"Node {node_index}'s Sensor Data Record has been cleared successfully.")
+        else:
+            print(f"Error Retrieving node {node_index}'s Sensor Data Record: {result.stderr}")
+    except Exception as e:
+        print(f"Exception occurred: {str(e)}")
