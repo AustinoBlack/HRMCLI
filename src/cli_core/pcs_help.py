@@ -56,7 +56,7 @@ def show_help(prefix, command):
             sysfru_help()
         elif command == "sys sel":
             syssel_help()
-        elif comand == "sys sdr":
+        elif command == "sys sdr":
             syssdr_help()
         else:
             print(f"*** Unknown command: {prefix} {command}. Type 'sh -help' for a list of sh commands.")
