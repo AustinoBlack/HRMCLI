@@ -74,6 +74,7 @@ def setpoweron(node_index):
             print(f"Node {node_index} powered on successfully.")
         else:
             print(f"Error powering on node {node_index}: {result.stderr}")
+        print(result.stdout)
     except Exception as e:
         print(f"Exception occurred: {str(e)}")
 
@@ -101,6 +102,7 @@ def setpoweroff(node_index):
             print(f"Node {node_index} powered off successfully.")
         else:
             print(f"Error powering off node {node_index}: {result.stderr}")
+        print(result.stdout)
     except Exception as e:
         print(f"Exception occurred: {str(e)}")
 
@@ -116,7 +118,7 @@ def sys_info(node_index):
         print(f"Error: No data found for node {node_index}")
         return
 
-    # created ipmi command # TODO: NEEDS REVIEW
+    # created ipmi command
     ipmi_command = [ 
         "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "mc", "info"
     ]   
@@ -128,6 +130,7 @@ def sys_info(node_index):
             print(f"Node {node_index}'s info retrived successfully.")
         else:
             print(f"Error retrieving node {node_index}'s info: {result.stderr}")
+        print(result.stdout)
     except Exception as e:
         print(f"Exception occurred: {str(e)}")
 
@@ -144,7 +147,7 @@ def sys_fru(node_index):
         print(f"Error: No data found for node {node_index}")
         return
 
-    # created ipmi command # TODO: NEEDS REVIEW
+    # created ipmi command 
     ipmi_command = [ 
         "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "fru", "print"
     ]   
@@ -156,6 +159,7 @@ def sys_fru(node_index):
             print(f"Node {node_index}'s Field Replaceable Unit data retrieved successfully.")
         else:
             print(f"Error retrieving node {node_index}'s Field Replaceable Unit data: {result.stderr}")
+        print(result.stdout)
     except Exception as e:
         print(f"Exception occurred: {str(e)}")
 
@@ -171,7 +175,7 @@ def sys_led_on(node_index):
         print(f"Error: No data found for node {node_index}")
         return
 
-    # created ipmi command # TODO: NEEDS REVIEW
+    # created ipmi command
     ipmi_command = [ 
         "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "chassis", "identify", "force"
     ]   
@@ -183,6 +187,7 @@ def sys_led_on(node_index):
             print(f"Node {node_index}'s attention led turned on successfully.")
         else:
             print(f"Error turning node {node_index}'s attention led on: {result.stderr}")
+        print(result.stdout)
     except Exception as e:
         print(f"Exception occurred: {str(e)}")
 
@@ -198,7 +203,7 @@ def sys_led_off(node_index):
         print(f"Error: No data found for node {node_index}")
         return
 
-    # created ipmi command # TODO: NEEDS REVIEW
+    # created ipmi command
     ipmi_command = [ 
         "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "chassis", "identify", "0"
     ]   
@@ -210,6 +215,7 @@ def sys_led_off(node_index):
             print(f"Node {node_index}'s attention led turned off successfully.")
         else:
             print(f"Error turning node {node_index}'s attention led off: {result.stderr}")
+        print(result.stdout)
     except Exception as e:
         print(f"Exception occurred: {str(e)}")
 
@@ -225,7 +231,7 @@ def sys_sel(node_index):
         print(f"Error: No data found for node {node_index}")
         return
 
-    # created ipmi command # TODO: NEEDS REVIEW
+    # created ipmi command
     ipmi_command = [ 
         "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "sel", "elist"
     ]   
@@ -237,6 +243,7 @@ def sys_sel(node_index):
             print(f"Node {node_index}'s System Event Log has been retrieved successfully.")
         else:
             print(f"Error retrieving node {node_index}'s System Event Log: {result.stderr}")
+        print(result.stdout)
     except Exception as e:
         print(f"Exception occurred: {str(e)}")
 
@@ -252,7 +259,7 @@ def sys_sel_clear(node_index):
         print(f"Error: No data found for node {node_index}")
         return
 
-    # created ipmi command # TODO: NEEDS REVIEW
+    # created ipmi command
     ipmi_command = [ 
         "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "sel", "clear"
     ]   
@@ -264,6 +271,7 @@ def sys_sel_clear(node_index):
             print(f"Node {node_index}'s System Event Log has been cleared successfully.")
         else:
             print(f"Error clearing node {node_index}'s System Event Log: {result.stderr}")
+        print(result.stdout)
     except Exception as e:
         print(f"Exception occurred: {str(e)}")
 
@@ -279,7 +287,7 @@ def sys_sdr(node_index):
         print(f"Error: No data found for node {node_index}")
         return
 
-    # created ipmi command # TODO: NEEDS REVIEW
+    # created ipmi command
     ipmi_command = [
         "ipmitool", "-I", "lanplus", "-H", node_data["ip"], "-U", node_data["user"], "-P", node_data["password"], "sdr", "list"
     ]
@@ -288,8 +296,9 @@ def sys_sdr(node_index):
     try:
         result = subprocess.run(ipmi_command, capture_output=True, text=True)
         if result.returncode == 0:
-            print(f"Node {node_index}'s Sensor Data Record has been cleared successfully.")
+            print(f"Node {node_index}'s Sensor Data Record has been retrieved successfully.")
         else:
             print(f"Error Retrieving node {node_index}'s Sensor Data Record: {result.stderr}")
+        print(result.stdout)
     except Exception as e:
         print(f"Exception occurred: {str(e)}")
