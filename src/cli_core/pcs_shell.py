@@ -4,23 +4,11 @@ import time
 import readline
 import subprocess
 
+import json
+CONFIG_PATH = "../configs/pcscli_config.json"
+
 from pcs_parse import parse_command
 from datetime import datetime
-
-LOGO = """
-
-██████╗  ██████╗███████╗ ██████╗██╗     ██╗
-██╔══██╗██╔════╝██╔════╝██╔════╝██║     ██║
-██████╔╝██║     ███████╗██║     ██║     ██║
-██╔═══╝ ██║     ╚════██║██║     ██║     ██║
-██║     ╚██████╗███████║╚██████╗███████╗██║
-╚═╝      ╚═════╝╚══════╝ ╚═════╝╚══════╝╚═╝
-                                           
-Proxmox Control Server Command Line Interface
-----------------------------------------------
-"""
-
-VERSION = "0.5"
 
 COMMANDS = {
     "pcscli": ["setpoweron", "setpoweroff", "reset", "status"],
@@ -30,6 +18,21 @@ COMMANDS = {
     "clear": [],
     "exit": []
 }
+
+def load_config():
+    try:
+        with open(CONFIG_PATH, "r") as file:
+            return json.load(file)
+    except Exception as e:
+        print(f"Error loading config: {str(e)}")
+        return {}
+
+CONFIG = load_config()
+
+def display_logo():
+    logo = CONFIG.get("logo", [])
+    for line in logo:
+        print(line)
 
 def complete(text, state):
     """Tab autocomplete function. Suggests commands based on user input."""
@@ -75,7 +78,7 @@ def main():
     print("starting PCSCLI...")
     time.sleep(2)
     clear_screen()
-    print(LOGO) 
+    display_logo()
     
     # Display last login and welcome message [ascii graphic?]
     username = os.getenv("USER", "user")
@@ -98,7 +101,7 @@ def main():
                 readline.add_history(user_input)
                 if user_input == "clear":
                     clear_screen()
-                    print(LOGO)
+                    display_logo()
                 elif user_input == "exit" or user_input == "quit": 
                     print("Exiting PCSCLI...") 
                     time.sleep(2)
