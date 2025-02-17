@@ -1,0 +1,9 @@
+{
+    "aliases": {
+        "exit": "quit",
+        "sys": "system",
+        "sh": "show",
+        "-h": "-help"
+    }
+}
+
