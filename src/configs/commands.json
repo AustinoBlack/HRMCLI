@@ -1,0 +1,161 @@
+{
+    "pcscli": {
+        "cmd": {
+            "syntax": "pcscli cmd [command] {-help} <-i ID>",
+            "syntax_details": [
+                "{-help}  - optional: displays this help message",
+                "[command] - any valid ipmitool command",
+                "<-i ID>   - node index"
+            ],
+            "help_msg": [
+                "Use for direct ipmitool command passthrough. Useful for testing!",
+                "Sample Usage:",
+                "pcscli cmd user list -i 1"
+            ]
+        },
+        "general_help": {
+            "syntax": "pcscli [operation] {-help}",
+            "help_msg": [
+                "This command provides a list of available operations under the 'pcscli' prefix.",
+                "List of available operations:",
+                "- cmd"
+            ]
+        }
+    },
+    "set": {
+        "sys power on": {
+            "syntax": "set power on {-help} <-i ID>",
+            "syntax_details": [
+                "{-help} - optional: displays this help message",
+                "<-i ID>  - node index"
+            ],
+            "help_msg": [
+                "This command sends an IPMI signal to turn the blade on.",
+                "Sample Usage:",
+                "set power on -i 1"
+            ]
+        },
+        "sys power off": {
+            "syntax": "set power off {-help} <-i ID>",
+            "syntax_details": [
+                "{-help} - optional: displays this help message",
+                "<-i ID>  - node index"
+            ],
+            "help_msg": [
+                "This command sends an IPMI signal to turn the blade off.",
+                "Sample Usage:",
+                "set power off -i 1"
+            ]
+        },
+        "sys led on": {
+            "syntax": "set sys led on {-help} <-i ID>",
+            "syntax_details": [
+                "{-help} - optional: displays this help message",
+                "<-i ID>  - node index"
+            ],
+            "help_msg": [
+                "Turns on the chassis attention LED.",
+                "Sample Usage:",
+                "set sys led on -i 1"
+            ]
+        },
+        "sys led off": {
+            "syntax": "set sys led off {-help} <-i ID>",
+            "syntax_details": [
+                "{-help} - optional: displays this help message",
+                "<-i ID>  - node index"
+            ],
+            "help_msg": [
+                "Turns off the chassis attention LED.",
+                "Sample Usage:",
+                "set sys led off -i 1"
+            ]
+        },
+        "sys sel clear": {
+            "syntax": "set sys sel clear {-help} <-i ID>",
+            "syntax_details": [
+                "{-help} - optional: displays this help message",
+                "<-i ID>  - node index"
+            ],
+            "help_msg": [
+                "Clears the node's SEL log.",
+                "Sample Usage:",
+                "set sys sel clear -i 1"
+            ]
+        },
+        "general_help": {
+            "syntax": "set [operation] {-help}",
+            "help_msg": [
+                "Provides a list of available operations under the 'set' prefix.",
+                "List of available operations:",
+                "- power on",
+                "- power off",
+                "- sys led on",
+                "- sys led off",
+                "- sys sel clear"
+            ]
+        }
+    },
+    "sh": {
+        "sys info": {
+            "syntax": "sh sys info {-help} <-i ID>",
+            "syntax_details": [
+                "{-help} - optional: displays this help message",
+                "<-i ID>  - node index"
+            ],
+            "help_msg": [
+                "Prints the system's information for a given node index.",
+                "Sample Usage:",
+                "sh sys info -i 1"
+            ]
+        },
+        "sys fru": {
+            "syntax": "sh sys fru {-help} <-i ID>",
+            "syntax_details": [
+                "{-help} - optional: displays this help message",
+                "<-i ID>  - node index"
+            ],
+            "help_msg": [
+                "Prints the system's FRU (Field Replaceable Unit) information.",
+                "Sample Usage:",
+                "sh sys fru -i 1"
+            ]
+        },
+        "sys sel": {
+            "syntax": "sh sys sel {-help} <-i ID>",
+            "syntax_details": [
+                "{-help} - optional: displays this help message",
+                "<-i ID>  - node index"
+            ],
+            "help_msg": [
+                "Prints the node's SEL log.",
+                "Sample Usage:",
+                "sh sys sel -i 1"
+            ]
+        },
+        "sys sdr": {
+            "syntax": "sh sys sdr {-help} <-i ID>",
+            "syntax_details": [
+                "{-help} - optional: displays this help message",
+                "<-i ID>  - node index"
+            ],
+            "help_msg": [
+                "Prints the node's Sensor Data Record (SDR).",
+                "Sample Usage:",
+                "sh sys sdr -i 1"
+            ]
+        },
+        "general_help": {
+            "syntax": "sh [operation] {-help}",
+            "help_msg": [
+                "Provides a list of available operations under the 'sh' prefix.",
+                "List of available operations:",
+                "- sys info",
+                "- sys fru",
+                "- sys sel",
+                "- sys sdr"
+            ]
+        }
+    }
+}
+
