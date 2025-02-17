@@ -1,32 +1,21 @@
-def show_general_help():
-    """
-    Displays a general help message for the CLI.
-    """
-    print("""
-Cluster CLI - General Help
-========================================================
-This command-line interface allows you to manage your Proxmox cluster via serial commands.
+import json
+CONFIG_PATH = "../configs/commands.json"
 
-Basic Commands:
-    help        Display this general help message.
-    clear       Clears the screen.
-    exit        Exits the Cluster CLI.
+def load_config():
+    try:
+        with open(CONFIG_PATH, "r") as file:
+            return json.load(file)
+    except Exception as e:
+        print(f"Error loading config: {str(e)}")
+        return {}
 
-Using the -help Flag:
-    Add the -help flag to any valid command to see detailed usage instructions.
+CONFIG = load_config()
 
-Advanced Commands:
-    pcscli      Manage power, reset, and basic node operations.
-    sh          Retrieve system information for nodes.
-    set         Configure system settings, including boot options, LEDs, and FRU.
-
-Version Information:
-    PCSCLI Version: 0.1.0
-    Author: Austin Black
-    License: MIT
-    """)
+def show_help_msg(prefix, command):
+    print("Help msg go here")
 
 
+'''
 def show_help(prefix, command):
     """
     Displays the help message for a given prefix and command.
@@ -72,6 +61,34 @@ def show_help(prefix, command):
             selclear_help()
         else:
             print(f"*** Unknown command: {prefix} {command}. Type 'set -help' for a list of set commands.")
+
+def show_general_help():
+    """
+    Displays a general help message for the CLI.
+    """
+    print("""
+Cluster CLI - General Help
+========================================================
+This command-line interface allows you to manage your Proxmox cluster via serial commands.
+
+Basic Commands:
+    help        Display this general help message.
+    clear       Clears the screen.
+    exit        Exits the Cluster CLI.
+
+Using the -help Flag:
+    Add the -help flag to any valid command to see detailed usage instructions.
+
+Advanced Commands:
+    pcscli      Manage power, reset, and basic node operations.
+    sh          Retrieve system information for nodes.
+    set         Configure system settings, including boot options, LEDs, and FRU.
+
+Version Information:
+    PCSCLI Version: 0.1.0
+    Author: Austin Black
+    License: MIT
+    """)
 
 def pcscli_general_help():
     print("""
@@ -259,3 +276,4 @@ Syntax: sh sys sel clear {-help} <-i ID>
 Sample Usage:
 sh sys sel clear -i 1
 """)
+'''
