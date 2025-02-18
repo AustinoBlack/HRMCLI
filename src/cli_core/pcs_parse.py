@@ -1,4 +1,4 @@
-from pcs_help import show_help
+from pcs_help import show_help, show_general_help
 from pcs_action import execute_command
 
 def parse_command(user_input):
@@ -15,21 +15,16 @@ def parse_command(user_input):
     command = tokens[0]
     args = tokens[1:]
 
-    if command == "help":
-        from pcs_help import show_general_help
-        show_general_help()
-        return
-
     # Handle prefix commands like pcscli, sh, set
     if command in ("pcscli", "sh", "set"):
         prefix = command
-        if len(args) > 1 and args[-1] == "-help":
-            specific_command = " ".join(args[:-1])
-            show_help(prefix, specific_command)
+        if len(args) == 1 and args[-1] == "-help":
+            show_general_help(prefix)
             return
 
-        elif len(args) == 1 and args[-1] == "-help":
-            show_help(prefix, "-help")
+        elif len(args) > 1 and args[-1] == "-help":
+            specific_command = " ".join(args[:-1])
+            show_help(prefix, specific_command)
             return
 
         elif args[-1] == "1" or args[-1] == "2":
