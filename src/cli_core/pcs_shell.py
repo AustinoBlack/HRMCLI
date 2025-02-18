@@ -34,6 +34,21 @@ def display_logo():
     for line in logo:
         print(line)
 
+def display_welcome():
+    msg = CONFIG.get("welcome_msg", [])
+    for line in msg:
+        print(line)
+
+def display_about():
+    abt = CONFIG.get("about",[])
+    for line in abt:
+        print(line)
+
+def display_help():
+    hlp = CONFIG.get("help_msg",[])
+    for line in hlp:
+        print(line)
+
 def complete(text, state):
     """Tab autocomplete function. Suggests commands based on user input."""
     buffer = readline.get_line_buffer().split()
@@ -85,7 +100,7 @@ def main():
     last_login_message = get_last_login(username)
     print(last_login_message)
     time.sleep(2)
-    print("Enter 'help' to get started\n")
+    display_welcome()
 
     # Enable history file
     history_file = ".pcscli_history"
@@ -107,8 +122,12 @@ def main():
                     time.sleep(2)
                     clear_screen()
                     break
+                elif user_input == "about":
+                    display_about()
+                elif user_input == "help":
+                    display_help()
                 else:
-                    parsed_command = parse_command(user_input)
+                    parse_command(user_input)
             else:
                 print("PcsCli# ", end="", flush=True) 
         except (KeyboardInterrupt, EOFError):

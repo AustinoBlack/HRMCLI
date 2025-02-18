@@ -9,5 +9,58 @@
         " ╚═╝      ╚═════╝╚══════╝ ╚═════╝╚══════╝╚═╝",
         "Proxmox Control Server Command Line Interface",
         "----------------------------------------------"
+    ],
+
+    "welcome_msg": [
+        "\nWelcome to PCSCLI!",
+        "Enter 'help' to get started\n"
+    ],
+
+    "about": [
+        "PCSCLI - Proxmox Cluster Service Command Line Interface",
+        "-------------------------------------------------------",
+        "A lightweight CLI for managing Proxmox cluster nodes via IPMI commands.", 
+        "",
+        "Version: 0.6",
+        "",
+        "Created by Austin Black"
+    ],
+
+    "help_msg": [
+        "",
+        "General Commands:",
+        "  exit, quit      - Close the PCSCLI session.",
+        "  about           - Display information about PCSCLI.",
+        "  help, -help     - Show help for available commands.",
+        "  clear           - Clear the terminal screen.",
+        "",
+        "Command Structure:",
+        "  [prefix] [command] {options} <-i ID>",
+        "  Use '-help' with any command for detailed usage.",
+        "",
+        "Available Commands:",
+        "",
+        "  pcscli",
+        "    cmd            - Execute a direct ipmitool command.",
+        "",
+        "  set",
+        "    power on       - Turn on power for a node.",
+        "    power off      - Turn off power for a node.",
+        "    sys led on     - Turn on the chassis attention LED.",
+        "    sys led off    - Turn off the chassis attention LED.",
+        "    sys sel clear  - Clear the node's SEL log.",
+        "",
+        "  sh",
+        "    sys info       - Show system information.",
+        "    sys fru        - Display FRU (Field Replaceable Unit) information.",
+        "    sys sel        - Show the node's SEL log.",
+        "    sys sdr        - Display the node's Sensor Data Record (SDR).",
+        "",
+        "Example Usage:",
+        "  sh sys info -i 1      # Show system info for node 1",
+        "  set power on -i 2     # Turn on power for node 2",
+        "  pcscli cmd user list -i 1  # Execute direct ipmitool command",
+        "",
+        "Type 'help' or '-help' for more details on specific commands."
     ]
 }
