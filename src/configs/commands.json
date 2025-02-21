@@ -1,7 +1,7 @@
 {
     "pcscli": {
         "cmd": {
-            "syntax": "pcscli cmd [command] {-help} <-i ID>",
+            "syntax": "pcscli cmd -c [command] {-help} <-i ID>",
             "syntax_details": [
                 "{-help}  - optional: displays this help message",
                 "[command] - any valid ipmitool command",
@@ -22,8 +22,10 @@
             ]
         }
     },
+
     "set": {
         "sys power on": {
+            "ipmi_cmd": "power on",
             "syntax": "set power on {-help} <-i ID>",
             "syntax_details": [
                 "{-help} - optional: displays this help message",
@@ -36,6 +38,7 @@
             ]
         },
         "sys power off": {
+            "ipmi_cmd": "power off",
             "syntax": "set power off {-help} <-i ID>",
             "syntax_details": [
                 "{-help} - optional: displays this help message",
@@ -48,6 +51,7 @@
             ]
         },
         "sys led on": {
+            "ipmi_cmd": "chassis identify force",
             "syntax": "set sys led on {-help} <-i ID>",
             "syntax_details": [
                 "{-help} - optional: displays this help message",
@@ -60,6 +64,7 @@
             ]
         },
         "sys led off": {
+            "ipmi_cmd": "chassis identify 0",
             "syntax": "set sys led off {-help} <-i ID>",
             "syntax_details": [
                 "{-help} - optional: displays this help message",
@@ -72,6 +77,7 @@
             ]
         },
         "sys sel clear": {
+            "ipmi_cmd": "sel clear",
             "syntax": "set sys sel clear {-help} <-i ID>",
             "syntax_details": [
                 "{-help} - optional: displays this help message",
@@ -96,8 +102,10 @@
             ]
         }
     },
+
     "sh": {
         "sys info": {
+            "ipmi_cmd": "mc info", 
             "syntax": "sh sys info {-help} <-i ID>",
             "syntax_details": [
                 "{-help} - optional: displays this help message",
@@ -110,6 +118,7 @@
             ]
         },
         "sys fru": {
+            "ipmi_cmd": "fru print",
             "syntax": "sh sys fru {-help} <-i ID>",
             "syntax_details": [
                 "{-help} - optional: displays this help message",
@@ -122,6 +131,7 @@
             ]
         },
         "sys sel": {
+            "ipmi_cmd": "sel elist",
             "syntax": "sh sys sel {-help} <-i ID>",
             "syntax_details": [
                 "{-help} - optional: displays this help message",
@@ -134,6 +144,7 @@
             ]
         },
         "sys sdr": {
+            "ipmi_cmd": "sdr list",
             "syntax": "sh sys sdr {-help} <-i ID>",
             "syntax_details": [
                 "{-help} - optional: displays this help message",
