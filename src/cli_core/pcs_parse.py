@@ -26,7 +26,7 @@ def parse_command(user_input):
         return
 
     elif args[-1] == "1" or args[-1] == "2":
-        command = "".join(args[:-2])
+        command = " ".join(args[:-2])
         execute_command(prefix, command, args[-1])
         return
     
