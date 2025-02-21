@@ -26,7 +26,7 @@
     "set": {
         "sys power on": {
             "ipmi_cmd": "power on",
-            "syntax": "set power on {-help} <-i ID>",
+            "syntax": "set sys power on {-help} <-i ID>",
             "syntax_details": [
                 "{-help} - optional: displays this help message",
                 "<-i ID>  - node index"
@@ -39,7 +39,7 @@
         },
         "sys power off": {
             "ipmi_cmd": "power off",
-            "syntax": "set power off {-help} <-i ID>",
+            "syntax": "set sys power off {-help} <-i ID>",
             "syntax_details": [
                 "{-help} - optional: displays this help message",
                 "<-i ID>  - node index"
