@@ -25,7 +25,7 @@ def parse_command(user_input):
         show_help(prefix, specific_command)
         return
 
-    elif args[-1] == "1" or args[-1] == "2":
+    elif args[-1] == "1" or args[-1] == "2":  # TODO needs attention
         command = " ".join(args[:-2])
         execute_command(prefix, command, args[-1])
         return
