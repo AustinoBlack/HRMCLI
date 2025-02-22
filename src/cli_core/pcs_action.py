@@ -26,15 +26,24 @@ def execute_command(prefix, command, node_index):
     # print(f"Executing: Prefix='{prefix}', Command='{command}', Index='{node_index}'")  # DEBUG
  
     try:
-        ipmi_cmd = command_data[prefix][command]["ipmi_cmd"]
+        ipmi_cmd = command_data[prefix][command]["ipmi_cmd"].split()
         ipmi_cred = ipmi_data["nodes"].get(str(node_index))
         if not ipmi_cred:
             print(f"No credential information found for node {node_index}")
             return        
-
+        
+        # Build command from JSON configs
         ipmi_command = [
-            "ipmitool", "-I", "lanplus", "-H", ipmi_cred["ip"], "-U", ipmi_cred["user"], "-P", ipmi_cred["password"], str(ipmi_cmd)
+            "ipmitool", 
+            "-I", "lanplus", 
+            "-H", ipmi_cred["ip"], 
+            "-U", ipmi_cred["user"], 
+            "-P", ipmi_cred["password"]
         ]
+
+        ipmi_command.extend(ipmi_cmd)
+
+        # print(", ".join(ipmi_command))        
 
         try:
             result = subprocess.run(ipmi_command, capture_output=True, text=True)
