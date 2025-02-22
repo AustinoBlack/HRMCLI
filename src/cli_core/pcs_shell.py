@@ -5,21 +5,13 @@ import readline
 import subprocess
 
 import json
-CONFIG_PATH = "../configs/pcscli_config.json"
+pcscli_config = "../configs/pcscli_config.json"
+comnds_config = "../configs/commands.json"
 
 from pcs_parse import parse_command
 from datetime import datetime
 
-COMMANDS = {
-    "pcscli": ["setpoweron", "setpoweroff", "reset", "status"],
-    "sh": ["sys", "bios", "code"],
-    "set": ["sys", "boot", "led", "fru"],
-    "help": [],
-    "clear": [],
-    "exit": []
-}
-
-def load_config():
+def load_config(CONFIG_PATH):
     try:
         with open(CONFIG_PATH, "r") as file:
             return json.load(file)
@@ -27,7 +19,8 @@ def load_config():
         print(f"Error loading config: {str(e)}")
         return {}
 
-CONFIG = load_config()
+CONFIG = load_config(pcscli_config)
+command_data = load_config(comnds_config)
 
 def display_logo():
     logo = CONFIG.get("logo", [])
@@ -51,15 +44,20 @@ def display_help():
 
 def complete(text, state):
     """Tab autocomplete function. Suggests commands based on user input."""
-    buffer = readline.get_line_buffer().split()
-    if len(buffer) == 1:
-        options = [cmd for cmd in COMMANDS.keys() if cmd.startswith(text)]
-    elif len(buffer) > 1 and buffer[0] in COMMANDS:
-        options = [sub for sub in COMMANDS[buffer[0]] if sub.startswith(text)]
-    else:
-        options = []
+    options = []
 
-    return options[state] if state < len(options) else None
+    # Get prefixes
+    if " " not in readline.get_line_buffer():
+        options = list(command_data.keys())
+    else:
+        parts = readline.get_line_buffer().split()
+        prefix = parts[0] if parts[0] in command_data else None
+
+        if prefix and len(parts) == 2:
+            options = list(command_data[prefix].keys())
+
+    matches = [cmd for cmd in options if cmd.startswith(text)]
+    return matches[state] if state < len(matches) else None   
 
 def setup_readline():
     """Enable tab completion and command history."""
