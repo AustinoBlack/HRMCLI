@@ -27,7 +27,15 @@ def execute_command(prefix, command, node_index):
  
     try:
         ipmi_cmd = command_data[prefix][command]["ipmi_cmd"]
+        ipmi_cred = ipmi_data["nodes"].get(str(node_index))
         print( "ipmi cmd is: >" + str(ipmi_cmd) )
+
+        ipmi_command = [
+            "ipmitool", "-I", "lanplus", "-H", ipmi_cred["ip"], "-U", ipmi_cred["user"], "-P", ipmi_cred["password"], str(ipmi_cmd)
+        ]
+
+        print("Built cmd: ")
+        print(" ".join(ipmi_command))
 
     except KeyError:
         print(f"Error: Command '{command}' not found under prefix '{prefix}'.")    
