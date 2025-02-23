@@ -28,8 +28,8 @@ fi
 
 # Ensure pcs_shell.py runs on login for pcscli user
 BASHRC_FILE="/home/$PCSCLI_USER/.bashrc"
-if ! grep -q "python3 $INSTALL_DIR/pcs_shell.py" "$BASHRC_FILE"; then
-    echo "python3 $INSTALL_DIR/pcs_shell.py" >> "$BASHRC_FILE"
+if ! grep -q "python3 $INSTALL_DIR/src/cli_core/pcs_shell.py" "$BASHRC_FILE"; then
+    echo "python3 $INSTALL_DIR/src/cli_core/pcs_shell.py" >> "$BASHRC_FILE"
 fi
 
 # Allow user to configure IPMI nodes
