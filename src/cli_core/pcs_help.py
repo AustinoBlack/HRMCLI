@@ -1,7 +1,11 @@
+import os
 import json
-CONFIG_PATH = "../configs/commands.json"
 
-def load_config():
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # Moves up two levels
+CONFIG_DIR = os.path.join(BASE_DIR, "configs")
+commands_config = os.path.join(CONFIG_DIR, "commands.json")
+
+def load_config(CONFIG_PATH):
     try:
         with open(CONFIG_PATH, "r") as file:
             return json.load(file)
@@ -9,7 +13,7 @@ def load_config():
         print(f"Error loading config: {str(e)}")
         return {}
 
-CONFIG_DATA = load_config()
+CONFIG_DATA = load_config(commands_config)
 
 def show_help(prefix, command):
     try:

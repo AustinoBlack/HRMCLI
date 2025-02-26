@@ -2,6 +2,12 @@ import subprocess
 import json
 import os
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CONFIG_DIR = os.path.join(BASE_DIR, "configs")
+
+ipmi_config = os.path.join(CONFIG_DIR, "ipmi_config.json")
+commands_config = os.path.join(CONFIG_DIR, "commands.json")
+
 def load_config(CONFIG_PATH):
     try:
         with open(CONFIG_PATH, "r") as file:
@@ -10,10 +16,8 @@ def load_config(CONFIG_PATH):
         print(f"Error loading config: {str(e)}")
         return {}
 
-COMMANDS_FILE = "../configs/commands.json"
-IPMI_FILE = "../configs/ipmi_config.json"
-command_data = load_config(COMMANDS_FILE)
-ipmi_data = load_config(IPMI_FILE)
+command_data = load_config(commands_config)
+ipmi_data = load_config(ipmi_config)
 
 def execute_command(prefix, command, node_index):
     """

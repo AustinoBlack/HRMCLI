@@ -5,8 +5,11 @@ import readline
 import subprocess
 
 import json
-pcscli_config = "../configs/pcscli_config.json"
-comnds_config = "../configs/commands.json"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CONFIG_DIR = os.path.join(BASE_DIR, "configs")
+
+pcscli_config = os.path.join(CONFIG_DIR, "pcscli_config.json")
+commands_config = os.path.join(CONFIG_DIR, "commands.json")
 
 from pcs_parse import parse_command
 from datetime import datetime
@@ -20,7 +23,11 @@ def load_config(CONFIG_PATH):
         return {}
 
 CONFIG = load_config(pcscli_config)
-command_data = load_config(comnds_config)
+command_data = load_config(commands_config)
+
+print(f"Base Directory: {BASE_DIR}")
+print(f"PCSCLI Config Path: {pcscli_config}")
+print(f"Commands Config Path: {commands_config}")
 
 def display_logo():
     logo = CONFIG.get("logo", [])
