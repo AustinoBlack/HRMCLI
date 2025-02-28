@@ -7,6 +7,7 @@ PCSCLI_USER="pcscli"
 DEFAULT_PASSWORD="pcscli"
 INSTALL_DIR="/opt/PCSCLI"
 REPO_URL="https://github.com/AustinoBlack/PCSCLI.git"
+DEFAULT_IP="172.16.0.1/29"
 
 # Create the pcscli user if it does not exist
 if ! id "$PCSCLI_USER" &>/dev/null; then
@@ -32,6 +33,16 @@ if ! grep -q "python3 $INSTALL_DIR/src/cli_core/pcs_shell.py" "$BASHRC_FILE"; th
     echo "python3 $INSTALL_DIR/src/cli_core/pcs_shell.py" >> "$BASHRC_FILE"
 fi
 
+# Configure Static IP
+read -p "Enter a new static IP and subnet (or press Enter to keep default: $DEFAULT_IP): " CUSTOM_IP
+if [ -z "$CUSTOM_IP" ]; then
+    CUSTOM_IP="$DEFAULT_IP"
+fi
+
+nmcli connection modify eth0 ipv4.addresses "$CUSTOM_IP" ipv4.method manual
+nmcli connection up eth0
+
 # Script complete
 echo "PCSCLI setup complete! Log in as '$PCSCLI_USER' with password '$DEFAULT_PASSWORD' to start using PCSCLI."
+echo "Static IP set to $CUSTOM_IP."
 
