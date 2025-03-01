@@ -24,7 +24,7 @@ def show_help(prefix, command):
         print("\nSyntax:")
         print(command_data["syntax"])
 
-        print("\nSyntax Details:")
+        print("\nDetails:")
         for detail in command_data["syntax_details"]:
             print(f"- {detail}")
         print()

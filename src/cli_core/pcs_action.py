@@ -1,5 +1,6 @@
 import subprocess
 import json
+import getpass
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -64,4 +65,32 @@ def execute_command(prefix, command, node_index):
             print(f"Exception occurred: {str(e)}")        
 
     except KeyError:
-        print(f"Error: Command '{command}' not found under prefix '{prefix}'.")    
+        print(f"Error: Command '{command}' not found under prefix '{prefix}'.")
+
+def change_pcscli_password():
+    """Allows the user to change the password for the pcscli user."""
+    
+    print("WARNING: You are about to change the password for the 'pcscli' user.")
+    confirmation = input("Do you want to continue? (y/n): ").strip().lower()
+
+    if confirmation != 'y':
+        print("Password change canceled.")
+        return
+
+    # Get new password securely
+    new_password = getpass.getpass("Enter new password: ")
+    confirm_password = getpass.getpass("Confirm new password: ")
+
+    if new_password != confirm_password:
+        print("Error: Passwords do not match. Operation aborted.")
+        return
+
+    # Execute password change command
+    try:
+        command = f'echo "pcscli:{new_password}" | sudo chpasswd'
+        subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        print("Password changed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to change password: {e}")
+
+ 

@@ -1,4 +1,4 @@
-from pcs_help import show_help, show_general_help
+from pcs_help import show_help, show_general_help, change_pcscli_password
 from pcs_action import execute_command
 
 def parse_command(user_input):
@@ -35,8 +35,8 @@ def parse_command(user_input):
             node_index = args[-1]
             command = args[2:-2]
             execute_command(prefix, command, node_index)            
-        else:
-            print("placeholder")
+        elif " ".join(args) == "change password":
+            change_pcscli_password()
         return
 
     else:

@@ -13,12 +13,22 @@
                 "pcscli -c cmd user list -i 1"
             ]
         },
+        "change password": {
+            "syntax": "pcscli change password",
+            "syntax_details": [
+                "Alias command for sudo chpasswd"
+            ],
+            "help_msg": [
+                "Use to chnage the default password for the pcscli user"
+            ]
+        },
         "general_help": {
             "syntax": "pcscli [operation] {-help}",
             "help_msg": [
                 "This command provides a list of available operations under the 'pcscli' prefix.",
                 "List of available operations:",
-                "- cmd"
+                "- cmd",
+                "- change password"
             ]
         }
     },
