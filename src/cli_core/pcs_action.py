@@ -27,10 +27,14 @@ def execute_command(prefix, command, node_index):
         prefix (str): The prefix of the command (e.g., pcscli, sh, set).
         args (list): List of arguments for the command.
     """
-    # print(f"Executing: Prefix='{prefix}', Command='{command}', Index='{node_index}'")  # DEBUG
+    print(f"Executing: Prefix='{prefix}', Command='{command}', Index='{node_index}'")  # DEBUG
  
     try:
-        ipmi_cmd = command_data[prefix][command]["ipmi_cmd"].split()
+        if prefix == "pcscli": # if pcscli skip ipmi cmd fetch for direct ipmitool cmd passthrough
+            ipmi_cmd = command
+        else:
+            ipmi_cmd = command_data[prefix][command]["ipmi_cmd"].split()
+        
         ipmi_cred = ipmi_data["nodes"].get(str(node_index))
         if not ipmi_cred:
             print(f"No credential information found for node {node_index}")
@@ -47,7 +51,7 @@ def execute_command(prefix, command, node_index):
 
         ipmi_command.extend(ipmi_cmd)
 
-        # print(", ".join(ipmi_command))        
+        print(", ".join(ipmi_command))        
 
         try:
             result = subprocess.run(ipmi_command, capture_output=True, text=True)

@@ -12,25 +12,33 @@ def parse_command(user_input):
     if not tokens:
         return
 
-    # << == wtf is this logic was i drunk??
-    command = tokens[0] # <<
+    prefix = tokens[0]
     args = tokens[1:]
-    prefix = command # <<
 
     if len(args) == 1 and args[-1] == "-help":
         show_general_help(prefix)
         return
 
     elif len(args) > 1 and args[-1] == "-help":
-        specific_command = " ".join(args[:-1]) # <<
-        show_help(prefix, specific_command)
+        command = " ".join(args[:-1])
+        show_help(prefix, command)
         return
 
-    elif args[-1] == "1" or args[-1] == "2":  # TODO needs attention
-        command = " ".join(args[:-2]) # <<
-        execute_command(prefix, command, args[-1])
+    elif prefix == "set" or prefix == "sh":
+        node_index = args[-1]
+        command = " ".join(args[:-2])
+        execute_command(prefix, command, node_index)
         return
     
+    elif prefix == "pcscli":
+        if args[0] == "cmd":
+            node_index = args[-1]
+            command = args[2:-2]
+            execute_command(prefix, command, node_index)            
+        else:
+            print("placeholder")
+        return
+
     else:
-        print(f"Unknown command: {command}. Type 'help' for a list of commands.")
+        print(f"Unknown prefix: {prefix}. Type 'help' for a list of commands.")
 
