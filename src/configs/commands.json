@@ -10,7 +10,7 @@
             "help_msg": [
                 "Use for direct ipmitool command passthrough. Useful for testing!",
                 "Sample Usage:",
-                "pcscli cmd user list -i 1"
+                "pcscli -c cmd user list -i 1"
             ]
         },
         "general_help": {
