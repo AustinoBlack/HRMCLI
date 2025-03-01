@@ -36,7 +36,6 @@ if [ -t 0 ]; then
     LAST_LOGIN=\$(last -i \$USER | head -1 | awk '{print \$6, \$7, \$8, \$9 " from " \$3}')
     echo "Last login: \$LAST_LOGIN"
     python3 \$INSTALL_DIR/src/cli_core/pcs_shell.py
-    exit
 fi
 
 EOL
