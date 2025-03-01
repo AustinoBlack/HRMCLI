@@ -27,11 +27,19 @@ if [ ! -d "$INSTALL_DIR" ]; then
     chown -R "$PCSCLI_USER":"$PCSCLI_USER" "$INSTALL_DIR"
 fi
 
-# Ensure pcs_shell.py runs on login for pcscli user
+# Add auto-launch to bashrc for the default user
 BASHRC_FILE="/home/$PCSCLI_USER/.bashrc"
-if ! grep -q "python3 $INSTALL_DIR/src/cli_core/pcs_shell.py" "$BASHRC_FILE"; then
-    echo "python3 $INSTALL_DIR/src/cli_core/pcs_shell.py" >> "$BASHRC_FILE"
+cat <<EOL >> "$BASHRC_FILE"
+# Auto-launch pcs_shell for the pcscli user and exit on exit
+if [ -t 0 ]; then
+    USER=\$PCSCLI_USER
+    LAST_LOGIN=\$(last -i \$USER | head -1 | awk '{print \$6, \$7, \$8, \$9 " from " \$3}')
+    echo "Last login: \$LAST_LOGIN"
+    python3 \$INSTALL_DIR/src/cli_core/pcs_shell.py
+    exit
 fi
+
+EOL
 
 # Configure Static IP
 read -p "Enter a new static IP and subnet (or press Enter to keep default: $DEFAULT_IP): " CUSTOM_IP
@@ -39,10 +47,17 @@ if [ -z "$CUSTOM_IP" ]; then
     CUSTOM_IP="$DEFAULT_IP"
 fi
 
-nmcli connection modify eth0 ipv4.addresses "$CUSTOM_IP" ipv4.method manual
-nmcli connection up eth0
+get_interface() {
+    nmcli device status | grep ethernet | awk '{print $1}'
+}
+
+INTERFACE=$(get_interface)
+nmcli connection modify "$INTERFACE" ipv4.addresses "$DEFAULT_IP" ipv4.method manual
+nmcli connection up "$INTERFACE"
 
 # Script complete
 echo "PCSCLI setup complete! Log in as '$PCSCLI_USER' with password '$DEFAULT_PASSWORD' to start using PCSCLI."
 echo "Static IP set to $CUSTOM_IP."
-
+echo "System will reboot in 10 seconds."
+sleep 10
+reboot
