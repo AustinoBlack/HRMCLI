@@ -47,12 +47,14 @@ if [ -z "$CUSTOM_IP" ]; then
     CUSTOM_IP="$DEFAULT_IP"
 fi
 
+# Function to get the active Ethernet interface
 get_interface() {
     nmcli device status | awk '$2 == "ethernet" {print $1; exit}'
 }
 
+# Function to get the correct connection profile name
 get_connection_name() {
-    nmcli connection show | awk -v iface="$1" '$4 == iface {print $1; exit}'
+    nmcli -g NAME,DEVICE connection show | grep "$1" | cut -d ':' -f1
 }
 
 INTERFACE=$(get_interface)
@@ -68,6 +70,8 @@ if [ -z "$CONNECTION_NAME" ]; then
     echo "No connection profile found for $INTERFACE. Exiting."
     exit 1
 fi
+
+echo "Setting IP for $INTERFACE using connection profile: $CONNECTION_NAME"
 
 # Set IP address
 nmcli connection modify "$CONNECTION_NAME" ipv4.addresses "$DEFAULT_IP" ipv4.method manual
