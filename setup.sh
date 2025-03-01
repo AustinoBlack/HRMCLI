@@ -76,6 +76,29 @@ echo "Setting IP for $INTERFACE using connection profile: $CONNECTION_NAME"
 nmcli connection modify "$CONNECTION_NAME" ipv4.addresses "$DEFAULT_IP" ipv4.method manual
 nmcli connection up "$CONNECTION_NAME"
 
+# Configure Serial Console
+
+SERIAL_SERVICE="serial-getty@ttyUSB0.service"
+
+# Enable and start serial-getty for ttyUSB0
+echo "Configuring serial console settings..."
+systemctl enable "$SERIAL_SERVICE"
+systemctl start "$SERIAL_SERVICE"
+
+# Modify cmdline.txt and config.txt for serial access
+CMDLINE_FILE="/boot/cmdline.txt"
+CONFIG_FILE="/boot/config.txt"
+
+# Ensure serial console is enabled in cmdline.txt
+if ! grep -q "console=serial0,115200" "$CMDLINE_FILE"; then
+    sed -i 's/$/ console=serial0,115200/' "$CMDLINE_FILE"
+fi
+
+# Enable UART in config.txt
+if ! grep -q "enable_uart=1" "$CONFIG_FILE"; then
+    echo "enable_uart=1" >> "$CONFIG_FILE"
+fi
+
 # Script complete
 echo "PCSCLI setup complete! Log in as '$PCSCLI_USER' with password '$DEFAULT_PASSWORD' to start using PCSCLI."
 echo "Static IP set to $CUSTOM_IP."
