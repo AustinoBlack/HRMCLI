@@ -1,5 +1,5 @@
-from pcs_help import show_help, show_general_help, change_pcscli_password
-from pcs_action import execute_command
+from pcs_help import show_help, show_general_help
+from pcs_action import execute_command, change_pcscli_password
 
 def parse_command(user_input):
     """
