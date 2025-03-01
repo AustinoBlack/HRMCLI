@@ -48,12 +48,30 @@ if [ -z "$CUSTOM_IP" ]; then
 fi
 
 get_interface() {
-    nmcli device status | grep ethernet | awk '{print $1}'
+    nmcli device status | awk '$2 == "ethernet" {print $1; exit}'
+}
+
+get_connection_name() {
+    nmcli connection show | awk -v iface="$1" '$4 == iface {print $1; exit}'
 }
 
 INTERFACE=$(get_interface)
-nmcli connection modify "$INTERFACE" ipv4.addresses "$DEFAULT_IP" ipv4.method manual
-nmcli connection up "$INTERFACE"
+
+if [ -z "$INTERFACE" ]; then
+    echo "No Ethernet interface found. Exiting."
+    exit 1
+fi
+
+CONNECTION_NAME=$(get_connection_name "$INTERFACE")
+
+if [ -z "$CONNECTION_NAME" ]; then
+    echo "No connection profile found for $INTERFACE. Exiting."
+    exit 1
+fi
+
+# Set IP address
+nmcli connection modify "$CONNECTION_NAME" ipv4.addresses "$DEFAULT_IP" ipv4.method manual
+nmcli connection up "$CONNECTION_NAME"
 
 # Script complete
 echo "PCSCLI setup complete! Log in as '$PCSCLI_USER' with password '$DEFAULT_PASSWORD' to start using PCSCLI."
