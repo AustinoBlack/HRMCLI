@@ -32,10 +32,10 @@ BASHRC_FILE="/home/$PCSCLI_USER/.bashrc"
 cat <<EOL >> "$BASHRC_FILE"
 # Auto-launch pcs_shell for the pcscli user and exit on exit
 if [ -t 0 ]; then
-    USER=\$PCSCLI_USER
+    USER="user"
     LAST_LOGIN=\$(last -i \$USER | head -1 | awk '{print \$6, \$7, \$8, \$9 " from " \$3}')
     echo "Last login: \$LAST_LOGIN"
-    python3 \$INSTALL_DIR/src/cli_core/pcs_shell.py
+    python3 /opt/PCSCLI/src/cli_core/pcs_shell.py
 fi
 
 EOL
