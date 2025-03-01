@@ -17,7 +17,7 @@
     ],
 
     "about": [
-        "PCSCLI - Proxmox Cluster Service Command Line Interface",
+        "PCSCLI - Proxmox Control Server Command Line Interface",
         "-------------------------------------------------------",
         "A lightweight CLI for managing Proxmox cluster nodes via IPMI commands.", 
         "",
