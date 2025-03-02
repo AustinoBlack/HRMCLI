@@ -81,7 +81,7 @@ nmcli connection up "$CONNECTION_NAME"
 
 # Configure Serial Console
 sudo raspi-config nonint do_serial 0
-sudo raspi-config nonint do_boot_serial 0
+stty -F /dev/USB0 115200
 
 # Script complete
 echo "PCSCLI setup complete! Log in as '$PCSCLI_USER' with password '$DEFAULT_PASSWORD' to start using PCSCLI."
