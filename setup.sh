@@ -30,17 +30,20 @@ fi
 # Add auto-launch to bashrc for the default user
 BASHRC_FILE="/home/$PCSCLI_USER/.bashrc"
 cat <<EOL >> "$BASHRC_FILE"
+
 # Auto-launch pcs_shell for the pcscli user and exit on exit
 if [ -t 0 ]; then
     USER="user"
     LAST_LOGIN=\$(last -i \$USER | head -1 | awk '{print \$6, \$7, \$8, \$9 " from " \$3}')
     echo "Last login: \$LAST_LOGIN"
     python3 /opt/PCSCLI/src/cli_core/pcs_shell.py
+    exit
 fi
 
 EOL
 
 # Configure Static IP
+echo "Attention!"
 read -p "Enter a new static IP and subnet (or press Enter to keep default: $DEFAULT_IP): " CUSTOM_IP
 if [ -z "$CUSTOM_IP" ]; then
     CUSTOM_IP="$DEFAULT_IP"
@@ -73,11 +76,12 @@ fi
 echo "Setting IP for $INTERFACE using connection profile: $CONNECTION_NAME"
 
 # Set IP address
-nmcli connection modify "$CONNECTION_NAME" ipv4.addresses "$DEFAULT_IP" ipv4.method manual
+nmcli connection modify "$CONNECTION_NAME" ipv4.addresses "$CUSTOM_IP" ipv4.method manual
 nmcli connection up "$CONNECTION_NAME"
 
 # Configure Serial Console
 sudo raspi-config nonint do_serial 0
+sudo raspi-config nonint do_boot_serial 0
 
 # Script complete
 echo "PCSCLI setup complete! Log in as '$PCSCLI_USER' with password '$DEFAULT_PASSWORD' to start using PCSCLI."
