@@ -77,18 +77,9 @@ def change_pcscli_password():
         print("Password change canceled.")
         return
 
-    # Get new password securely
-    new_password = getpass.getpass("Enter new password: ")
-    confirm_password = getpass.getpass("Confirm new password: ")
-
-    if new_password != confirm_password:
-        print("Error: Passwords do not match. Operation aborted.")
-        return
-
     # Execute password change command
     try:
-        command = f'echo "pcscli:{new_password}" | sudo chpasswd'
-        subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        subprocess.run(["passwd"], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, check=True)
         print("Password changed successfully.")
     except subprocess.CalledProcessError as e:
         print(f"Failed to change password: {e}")
