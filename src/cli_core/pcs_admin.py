@@ -70,3 +70,35 @@ def add_node():
     
     save_config(ipmi_data)
     print(f"New node {node_index} successfully added!")
+
+def edit_node():
+    # Get node index to edit
+    node_index = input("Enter node index to edit: ").strip()
+
+    # Check if the node exists
+    if node_index not in ipmi_data["nodes"]:
+        print(f"Error: Node {node_index} does not exist!")
+        return
+
+    # Display current values
+    current_node = ipmi_data["nodes"][node_index]
+    print(f"\nEditing Node {node_index} (Press Enter to keep current values)\n")
+    
+    # Get new values (keep existing if Enter is pressed)
+    new_ip = input(f"Enter new IP (Current: {current_node['ip']}): ").strip() or current_node["ip"]
+    new_user = input(f"Enter new BMC username (Current: {current_node['user']}): ").strip() or current_node["user"]
+    new_password = input(f"Enter new BMC password (Current: {current_node['password']}): ").strip() or current_node["password"]
+
+    # Update node details
+    ipmi_data["nodes"][node_index] = {
+        "ip": new_ip,
+        "user": new_user,
+        "password": new_password
+    }
+
+    # Save changes
+    save_config(ipmi_data)
+
+    print(f"Node {node_index} successfully updated!")
+
+

@@ -31,6 +31,15 @@
                 "pending"
             ]
         },
+        "edit node": {
+            "syntax": "pcscli edit node",
+            "syntax_details": [
+                "Prompts the user to edit credentials for an existing node"
+            ],  
+            "help_msg": [
+                "pending"
+            ]
+        },
         "general_help": {
             "syntax": "pcscli [operation] {-help}",
             "help_msg": [
