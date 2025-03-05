@@ -1,5 +1,6 @@
 from pcs_help import show_help, show_general_help
-from pcs_action import execute_command, change_pcscli_password
+from pcs_action import execute_command
+from pcs_admin import change_pcscli_password, add_node
 
 def parse_command(user_input):
     """
@@ -37,6 +38,8 @@ def parse_command(user_input):
             execute_command(prefix, command, node_index)            
         elif " ".join(args) == "change password":
             change_pcscli_password()
+        elif " ".join(args) == "add node":
+            add_node()
         return
 
     else:

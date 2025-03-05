@@ -22,6 +22,15 @@
                 "Use to chnage the default password for the pcscli user"
             ]
         },
+        "add node": {
+            "syntax": "pcscli add node",
+            "syntax_details": [
+                "Prompts the user to add credentials for a new node"
+            ],
+            "help_msg": [
+                "pending"
+            ]
+        },
         "general_help": {
             "syntax": "pcscli [operation] {-help}",
             "help_msg": [
