@@ -54,7 +54,7 @@ def add_node():
     print("\nSummary of entered data:")
     print(f"  Node Index: {node_index}")
     print(f"  BMC Username: {bmc_user}")
-    print(f"  BMC Password: {'*' * len(bmc_pass)} (hidden)")
+    print(f"  BMC Password: {bmc_pass}")
     print(f"  IPMI IP: {ipmi_ip}")
     
     confirm = input("Confirm? (y/n): ").strip().lower()
