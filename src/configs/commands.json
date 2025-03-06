@@ -49,6 +49,15 @@
                 "pending"
             ]
         },
+        "list node": {
+            "syntax": "pcscli list node",
+            "syntax_details": [
+                "Lists all nodes configured"
+            ],  
+            "help_msg": [
+                "pending"
+            ]
+        },
         "general_help": {
             "syntax": "pcscli [operation] {-help}",
             "help_msg": [

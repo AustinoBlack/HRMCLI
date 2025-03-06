@@ -124,3 +124,16 @@ def remove_node():
 
     print(f"Node {node_index} successfully removed!")
 
+def list_nodes(): 
+    if not ipmi_data:
+        print("No nodes found in configuration.")
+        return
+    
+    # Print header
+    print("Node Index  | IP Address   | Username")
+    print("------------------------------------")
+    
+    # Print node details
+    for index, details in sorted(ipmi_data["nodes"].items(), key=lambda x: int(x[0])):
+        print(f"{index:<11} | {details['ip']:<12} | {details['user']}")
+
