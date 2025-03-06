@@ -4,11 +4,6 @@
             "ip": "172.16.0.2",
             "user": "ADMIN",
             "password": "SJCUKYTBYI"
-        },
-        "2": {
-            "ip": "3.2.1.0",
-            "user": "ADMIN",
-            "password": "ADMIN"
         }
     }
 }

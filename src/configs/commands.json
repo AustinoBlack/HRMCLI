@@ -40,6 +40,15 @@
                 "pending"
             ]
         },
+        "remove node": {
+            "syntax": "pcscli remove node",
+            "syntax_details": [
+                "Prompts the user to remove an existing node from pcscli"
+            ],
+            "help_msg": [
+                "pending"
+            ]
+        },
         "general_help": {
             "syntax": "pcscli [operation] {-help}",
             "help_msg": [

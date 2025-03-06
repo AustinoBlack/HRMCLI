@@ -101,4 +101,26 @@ def edit_node():
 
     print(f"Node {node_index} successfully updated!")
 
+def remove_node():
+   # Get node index to remove
+    node_index = input("Enter node index to remove: ").strip()
+
+    # Check if the node exists
+    if node_index not in ipmi_data["nodes"]:
+        print(f"Error: Node {node_index} does not exist!")
+        return
+
+    # Ask for confirmation
+    confirm = input(f"Are you sure you want to remove Node {node_index}? (yes/no): ").strip().lower()
+    if confirm != "yes":
+        print("Operation canceled.")
+        return
+
+    # Remove the node
+    del ipmi_data["nodes"][node_index]
+
+    # Save changes
+    save_config(ipmi_data)
+
+    print(f"Node {node_index} successfully removed!")
 
