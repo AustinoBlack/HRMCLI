@@ -1,0 +1,14 @@
+{
+    "nodes": {
+        "1": {
+            "ip": "172.16.0.2",
+            "user": "ADMIN",
+            "password": "SJCUKYTBYI"
+        },
+        "2": {
+            "ip": "172.16.0.3",
+            "user": "ADMIN",
+            "password": "ADMIN"
+        }
+    }
+}

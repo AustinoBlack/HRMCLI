@@ -2,12 +2,13 @@ import subprocess
 import json
 import os
 from datetime import datetime
+import shutil
 
 #---------------------- File Handlers ----------------------
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_DIR = os.path.join(BASE_DIR, "configs")
-BACKUP_DIR = "/opt/PCSCLI/backups/"
+BACKUP_DIR = os.path.join(BASE_DIR, "backups")
 
 ipmi_config = os.path.join(CONFIG_DIR, "ipmi_config.json")
 pcscli_config = os.path.join(CONFIG_DIR, "pcscli_config.json")
@@ -76,6 +77,10 @@ def get_last_backup():
         return "Never"
     return "Never"
 
+def ensure_backup_dir():
+    """Ensure the backup directory exists."""
+    if not os.path.exists(BACKUP_DIR):
+        os.makedirs(BACKUP_DIR)
 
 #---------------------- ADMIN Functions ----------------------
 
@@ -205,7 +210,20 @@ def pcscli_status():
     print(f"Last Backup: {get_last_backup()}")
 
 def backup_config():
-    print("stub")
+    """Creates a timestamped backup of ipmi_config.json."""
+    ensure_backup_dir()
+    
+    # Generate timestamped backup filename
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_filename = f"ipmi_config_backup_{timestamp}.json"
+    backup_path = os.path.join(BACKUP_DIR, backup_filename)
+
+    try:
+        shutil.copy(ipmi_config, backup_path)
+        print(f"Backup successful: {backup_filename}")
+    except Exception as e:
+        print(f"Error creating backup: {e}")
+
 
 def restore_config():
     print("stub")
