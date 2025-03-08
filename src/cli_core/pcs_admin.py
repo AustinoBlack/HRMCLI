@@ -60,7 +60,7 @@ def get_network_info():
 def get_system_uptime():
     """Gets system uptime in a readable format."""
     try:
-        result = subprocess.run(["uptime", "-p"], capture_output=True, text=True)
+        result = subprocess.run(["uptime"], capture_output=True, text=True)
         return result.stdout.strip().replace("up ", "")
     except Exception:
         return "Unknown"
