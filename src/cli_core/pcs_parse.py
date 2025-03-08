@@ -1,6 +1,6 @@
 from pcs_help import show_help, show_general_help
 from pcs_action import execute_command
-from pcs_admin import change_pcscli_password, add_node, edit_node, remove_node, list_nodes
+from pcs_admin import change_pcscli_password, add_node, edit_node, remove_node, list_nodes, pscsli_status, backup_config, restore_config
 
 def parse_command(user_input):
     """
@@ -46,6 +46,12 @@ def parse_command(user_input):
             remove_node()
         elif " ".join(args) == "list nodes":
             list_nodes()
+        elif " ".join(args) == "status":
+            pcscli_status()
+        elif " ".join(args) == "backup config":
+            backup_config()
+        elif " ".join(args) == "restore config":
+            restore_config()
         return
 
     else:

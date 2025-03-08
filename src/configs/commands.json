@@ -49,11 +49,38 @@
                 "pending"
             ]
         },
-        "list node": {
+        "list nodes": {
             "syntax": "pcscli list node",
             "syntax_details": [
                 "Lists all nodes configured"
             ],  
+            "help_msg": [
+                "pending"
+            ]
+        },
+        "status": {
+            "syntax": "pcscli status",
+            "syntax_details": [
+                "lists the stats of the system and pcscli"
+            ],  
+            "help_msg": [
+                "pending"
+            ]   
+        },
+        "backup config": {
+            "syntax": "pcscli backup config",
+            "syntax_details": [
+                "creates a backup of the ipmi config file"
+            ],
+            "help_msg": [
+                "pending"
+            ]
+        },
+        "restore config": {
+            "syntax": "pcscli restore config",
+            "syntax_details": [
+                "restores a backup of the ipmi config file"
+            ],
             "help_msg": [
                 "pending"
             ]
@@ -63,8 +90,15 @@
             "help_msg": [
                 "This command provides a list of available operations under the 'pcscli' prefix.",
                 "List of available operations:",
+                "- status",
                 "- cmd",
-                "- change password"
+                "- change password",
+                "- add node",
+                "- edit node",
+                "- remove node",
+                "- list nodes",
+                "- backup config",
+                "- restore config"
             ]
         }
     },
