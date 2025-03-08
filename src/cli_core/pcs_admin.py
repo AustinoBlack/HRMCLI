@@ -82,6 +82,17 @@ def ensure_backup_dir():
     if not os.path.exists(BACKUP_DIR):
         os.makedirs(BACKUP_DIR)
 
+def list_backups():
+    """List available backup files."""
+    backups = sorted([f for f in os.listdir(BACKUP_DIR) if f.startswith("ipmi_config_backup_")])
+    if not backups:
+        print("No backups available.")
+        return None
+    print("\nAvailable backups:")
+    for i, backup in enumerate(backups, start=1):
+        print(f"{i}. {backup}")
+    return backups
+
 #---------------------- ADMIN Functions ----------------------
 
 def change_pcscli_password():
@@ -201,6 +212,7 @@ def list_nodes():
 
 def pcscli_status():
     """Displays PCSCLI system status."""
+    print(" ")
     print(f"{VERSION} - Status")
     print("-" * 22)
     print(f"Nodes Configured: {get_node_count()}")
@@ -208,6 +220,7 @@ def pcscli_status():
     print(f"Network: {get_network_info()} (eth0)")
     print(f"System Uptime: {get_system_uptime()}")
     print(f"Last Backup: {get_last_backup()}")
+    print(" ")
 
 def backup_config():
     """Creates a timestamped backup of ipmi_config.json."""
@@ -224,6 +237,31 @@ def backup_config():
     except Exception as e:
         print(f"Error creating backup: {e}")
 
-
 def restore_config():
-    print("stub")
+    """Restore a selected backup file."""
+    backups = list_backups()
+    if not backups:
+        return
+
+    # Ask user to select a backup
+    try:
+        choice = int(input("\nEnter the number of the backup to restore: "))
+        if choice < 1 or choice > len(backups):
+            print("Invalid selection.")
+            return
+    except ValueError:
+        print("Please enter a valid number.")
+        return
+
+    # Restore selected backup
+    backup_file = backups[choice - 1]
+    backup_path = os.path.join(BACKUP_DIR, backup_file)
+    print(f"\nRestoring {backup_file}...")
+
+    try:
+        shutil.copy(backup_path, ipmi_config)
+        global ipmi_data
+        ipmi_data = load_config(ipmi_config)
+        print("Configuration restored successfully!")
+    except Exception as e:
+        print(f"Error restoring backup: {e}")
