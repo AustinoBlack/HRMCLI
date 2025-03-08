@@ -16,12 +16,12 @@
         "Enter 'help' to get started\n"
     ],
 
+    "version": "0.8",
+
     "about": [
         "PCSCLI - Proxmox Control Server Command Line Interface",
         "-------------------------------------------------------",
         "A lightweight CLI for managing Proxmox cluster nodes via IPMI commands.", 
-        "",
-        "Version: 0.6",
         "",
         "Created by Austin Black"
     ],

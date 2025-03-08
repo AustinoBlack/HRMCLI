@@ -1,6 +1,6 @@
 from pcs_help import show_help, show_general_help
 from pcs_action import execute_command
-from pcs_admin import change_pcscli_password, add_node, edit_node, remove_node, list_nodes, pscsli_status, backup_config, restore_config
+from pcs_admin import change_pcscli_password, add_node, edit_node, remove_node, list_nodes, pcscli_status, backup_config, restore_config
 
 def parse_command(user_input):
     """

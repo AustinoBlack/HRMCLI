@@ -10,6 +10,7 @@ CONFIG_DIR = os.path.join(BASE_DIR, "configs")
 BACKUP_DIR = "/opt/PCSCLI/backups/"
 
 ipmi_config = os.path.join(CONFIG_DIR, "ipmi_config.json")
+pcscli_config = os.path.join(CONFIG_DIR, "pcscli_config.json")
 
 def load_config(CONFIG_PATH):
     try:
@@ -24,9 +25,16 @@ def save_config(config):
     with open(ipmi_config, "w") as f:
         json.dump(config, f, indent=4)
 
+pcscli_data = load_config(pcscli_config)
+VERSION = pcscli_data["version"]
+
 ipmi_data = load_config(ipmi_config)
 
 #---------------------- Helper Functions ----------------------
+
+def get_node_count():
+    """Returns the number of configured nodes from ipmi_config.json."""
+    return len(ipmi_data.get("nodes", {}))
 
 def get_serial_status():
     """Checks if the serial console is enabled."""
@@ -195,3 +203,9 @@ def pcscli_status():
     print(f"Network: {get_network_info()} (eth0)")
     print(f"System Uptime: {get_system_uptime()}")
     print(f"Last Backup: {get_last_backup()}")
+
+def backup_config():
+    print("stub")
+
+def restore_config():
+    print("stub")
