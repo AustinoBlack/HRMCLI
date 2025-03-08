@@ -1,9 +1,13 @@
 import subprocess
 import json
 import os
+from datetime import datetime
+
+#---------------------- File Handlers ----------------------
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_DIR = os.path.join(BASE_DIR, "configs")
+BACKUP_DIR = "/opt/PCSCLI/backups/"
 
 ipmi_config = os.path.join(CONFIG_DIR, "ipmi_config.json")
 
@@ -21,6 +25,51 @@ def save_config(config):
         json.dump(config, f, indent=4)
 
 ipmi_data = load_config(ipmi_config)
+
+#---------------------- Helper Functions ----------------------
+
+def get_serial_status():
+    """Checks if the serial console is enabled."""
+    try:
+        result = subprocess.run(["systemctl", "is-enabled", "serial-getty@ttyS0.service"],
+                                capture_output=True, text=True)
+        return "Enabled" if "enabled" in result.stdout else "Disabled"
+    except Exception:
+        return "Unknown"
+
+def get_network_info():
+    """Gets the network IP and subnet for the primary interface."""
+    try:
+        result = subprocess.run(["ip", "-4", "addr", "show", "eth0"], capture_output=True, text=True)
+        for line in result.stdout.split("\n"):
+            if "inet" in line:
+                return line.split()[1]  # Should extract ip. ie - '172.16.0.1/29'
+    except Exception:
+        return "Unknown"
+    return "Unknown"
+
+def get_system_uptime():
+    """Gets system uptime in a readable format."""
+    try:
+        result = subprocess.run(["uptime", "-p"], capture_output=True, text=True)
+        return result.stdout.strip().replace("up ", "")
+    except Exception:
+        return "Unknown"
+
+def get_last_backup():
+    """Finds the most recent backup timestamp."""
+    try:
+        backups = [f for f in os.listdir(BACKUP_DIR) if f.endswith(".json")]
+        if backups:
+            latest_backup = max(backups, key=lambda x: os.path.getctime(os.path.join(BACKUP_DIR, x)))
+            timestamp = datetime.fromtimestamp(os.path.getctime(os.path.join(BACKUP_DIR, latest_backup)))
+            return timestamp.strftime("%Y-%m-%d %H:%M:%S")
+    except Exception:
+        return "Never"
+    return "Never"
+
+
+#---------------------- ADMIN Functions ----------------------
 
 def change_pcscli_password():
     """Allows the user to change the password for the pcscli user."""
@@ -137,3 +186,12 @@ def list_nodes():
     for index, details in sorted(ipmi_data["nodes"].items(), key=lambda x: int(x[0])):
         print(f"{index:<11} | {details['ip']:<12} | {details['user']}")
 
+def pcscli_status():
+    """Displays PCSCLI system status."""
+    print(f"{VERSION} - Status")
+    print("-" * 22)
+    print(f"Nodes Configured: {get_node_count()}")
+    print(f"Serial Console: {get_serial_status()}")
+    print(f"Network: {get_network_info()} (eth0)")
+    print(f"System Uptime: {get_system_uptime()}")
+    print(f"Last Backup: {get_last_backup()}")
