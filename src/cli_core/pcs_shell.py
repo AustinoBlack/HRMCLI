@@ -8,7 +8,7 @@ import json
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_DIR = os.path.join(BASE_DIR, "configs")
 
-pcscli_config = os.path.join(CONFIG_DIR, "pcscli_config.json")
+hrmcli_config = os.path.join(CONFIG_DIR, "hrmcli_config.json")
 commands_config = os.path.join(CONFIG_DIR, "commands.json")
 
 from pcs_parse import parse_command
@@ -22,12 +22,8 @@ def load_config(CONFIG_PATH):
         print(f"Error loading config: {str(e)}")
         return {}
 
-CONFIG = load_config(pcscli_config)
+CONFIG = load_config(hrmcli_config)
 command_data = load_config(commands_config)
-
-print(f"Base Directory: {BASE_DIR}")
-print(f"PCSCLI Config Path: {pcscli_config}")
-print(f"Commands Config Path: {commands_config}")
 
 def display_logo():
     logo = CONFIG.get("logo", [])
@@ -108,7 +104,7 @@ def main():
     display_welcome()
 
     # Enable history file
-    history_file = ".pcscli_history"
+    history_file = ".hrmcli_history"
     try:
         readline.read_history_file(history_file)
     except FileNotFoundError:
@@ -116,14 +112,14 @@ def main():
 
     while True:
         try:
-            user_input = input("PcsCli# ").strip()
+            user_input = input("HrmCli# ").strip()
             if user_input:
                 readline.add_history(user_input)
                 if user_input == "clear":
                     clear_screen()
                     display_logo()
                 elif user_input == "exit" or user_input == "quit": 
-                    print("Exiting PCSCLI...") 
+                    print("Exiting HRMCLI...") 
                     time.sleep(2)
                     clear_screen()
                     break
@@ -134,9 +130,9 @@ def main():
                 else:
                     parse_command(user_input)
             else:
-                print("PcsCli# ", end="", flush=True) 
+                print("HrmCli# ", end="", flush=True) 
         except (KeyboardInterrupt, EOFError):
-            print("\nExiting PCSCLI...")
+            print("\nExiting HRMCLI...")
             time.sleep(2)
             clear_screen()
             break

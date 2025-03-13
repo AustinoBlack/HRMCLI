@@ -30,7 +30,7 @@ def execute_command(prefix, command, node_index):
     print(f"Executing: Prefix='{prefix}', Command='{command}', Index='{node_index}'")  # DEBUG
  
     try:
-        if prefix == "pcscli": # if pcscli skip ipmi cmd fetch for direct ipmitool cmd passthrough
+        if prefix == "hrmcli":
             if command == "test connection":
                 ipmi_cmd = command_data[prefix][command]["ipmi_cmd"].split()
             else:

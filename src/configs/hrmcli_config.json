@@ -1,27 +1,26 @@
 {
     "logo": [
-        "                                            ",
-        " ██████╗  ██████╗███████╗ ██████╗██╗     ██╗",
-        " ██╔══██╗██╔════╝██╔════╝██╔════╝██║     ██║",
-        " ██████╔╝██║     ███████╗██║     ██║     ██║",
-        " ██╔═══╝ ██║     ╚════██║██║     ██║     ██║",
-        " ██║     ╚██████╗███████║╚██████╗███████╗██║",
-        " ╚═╝      ╚═════╝╚══════╝ ╚═════╝╚══════╝╚═╝",
-        "Proxmox Control Server Command Line Interface",
+        "██╗  ██╗██████╗ ███╗   ███╗ ██████╗██╗     ██╗",
+        "██║  ██║██╔══██╗████╗ ████║██╔════╝██║     ██║",
+        "███████║██████╔╝██╔████╔██║██║     ██║     ██║",
+        "██╔══██║██╔══██╗██║╚██╔╝██║██║     ██║     ██║",
+        "██║  ██║██║  ██║██║ ╚═╝ ██║╚██████╗███████╗██║",
+        "╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝╚══════╝╚═╝",
+        " Homelab Rack Manager Command Line Interface",
         "----------------------------------------------"
     ],
 
     "welcome_msg": [
-        "\nWelcome to PCSCLI!",
+        "\nWelcome to HRMCLI!",
         "Enter 'help' to get started\n"
     ],
 
     "version": "0.8",
 
     "about": [
-        "PCSCLI - Proxmox Control Server Command Line Interface",
+        "HRMCLI - Homelab Rack Manager Command Line Interface",
         "-------------------------------------------------------",
-        "A lightweight CLI for managing Proxmox cluster nodes via IPMI commands.", 
+        "A lightweight CLI for managing homelab environments.", 
         "",
         "Created by Austin Black"
     ],
@@ -29,8 +28,8 @@
     "help_msg": [
         "",
         "General Commands:",
-        "  exit, quit      - Close the PCSCLI session.",
-        "  about           - Display information about PCSCLI.",
+        "  exit, quit      - Close the HRMCLI session.",
+        "  about           - Display information about HRMCLI.",
         "  help, -help     - Show help for available commands.",
         "  clear           - Clear the terminal screen.",
         "",
@@ -40,7 +39,7 @@
         "",
         "Available Commands:",
         "",
-        "  pcscli",
+        "  hrmcli",
         "    cmd              - Execute a direct ipmitool command.",
         "    change password  - Change the password for the pcscli user.",
         "    list nodes       - Display all configured nodes.",

@@ -1,6 +1,6 @@
 from pcs_help import show_help, show_general_help
 from pcs_action import execute_command
-from pcs_admin import change_pcscli_password, add_node, edit_node, remove_node, list_nodes, pcscli_status, backup_config, restore_config
+from pcs_admin import change_password, add_node, edit_node, remove_node, list_nodes, pcscli_status, backup_config, restore_config
 
 def parse_command(user_input):
     """
@@ -31,13 +31,13 @@ def parse_command(user_input):
         execute_command(prefix, command, node_index)
         return
     
-    elif prefix == "pcscli":
+    elif prefix == "hrmcli":
         if args[0] == "cmd":
             node_index = args[-1]
             command = args[2:-2]
             execute_command(prefix, command, node_index)            
         elif " ".join(args) == "change password":
-            change_pcscli_password()
+            change_password()
         elif " ".join(args) == "add node":
             add_node()
         elif " ".join(args) == "edit node":

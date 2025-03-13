@@ -11,7 +11,7 @@ CONFIG_DIR = os.path.join(BASE_DIR, "configs")
 BACKUP_DIR = os.path.join(BASE_DIR, "backups")
 
 ipmi_config = os.path.join(CONFIG_DIR, "ipmi_config.json")
-pcscli_config = os.path.join(CONFIG_DIR, "pcscli_config.json")
+hrmcli_config = os.path.join(CONFIG_DIR, "hrmcli_config.json")
 
 def load_config(CONFIG_PATH):
     try:
@@ -26,8 +26,8 @@ def save_config(config):
     with open(ipmi_config, "w") as f:
         json.dump(config, f, indent=4)
 
-pcscli_data = load_config(pcscli_config)
-VERSION = pcscli_data["version"]
+hrmcli_data = load_config(hrmcli_config)
+VERSION = hrmcli_data["version"]
 
 ipmi_data = load_config(ipmi_config)
 
@@ -95,7 +95,7 @@ def list_backups():
 
 #---------------------- ADMIN Functions ----------------------
 
-def change_pcscli_password():
+def change_password():
     """Allows the user to change the password for the pcscli user."""
         
     print("WARNING: You are about to change the password for the 'pcscli' user.")
