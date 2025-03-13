@@ -85,6 +85,19 @@
                 "pending"
             ]
         },
+        "test connection": {
+            "ipmi_cmd": "chassis status",
+            "syntax": "pcscli test connection {-help} <-i ID>",
+            "syntax_details": [
+                "{-help} - optional: displays this help message",
+                "<-i ID>  - node index"
+            ],
+            "help_msg": [
+                "This command is used to verify ipmi credentials and network configuration.",
+                "Sample Usage:",
+                "pcscli test connection -i 1"
+            ]  
+        },
         "general_help": {
             "syntax": "pcscli [operation] {-help}",
             "help_msg": [
@@ -98,7 +111,8 @@
                 "- remove node",
                 "- list nodes",
                 "- backup config",
-                "- restore config"
+                "- restore config",
+                "- test connection <-i ID>"
             ]
         }
     },

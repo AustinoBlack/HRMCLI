@@ -15,7 +15,7 @@ def parse_command(user_input):
 
     prefix = tokens[0]
     args = tokens[1:]
-
+    
     if len(args) == 1 and args[-1] == "-help":
         show_general_help(prefix)
         return
@@ -52,6 +52,9 @@ def parse_command(user_input):
             backup_config()
         elif " ".join(args) == "restore config":
             restore_config()
+        elif " ".join(args[0:-2]) == "test connection":
+            node_index = args[-1]
+            execute_command(prefix, "test connection", node_index)
         return
 
     else:
