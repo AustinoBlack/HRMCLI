@@ -54,7 +54,7 @@ def execute_command(prefix, command, node_index):
 
         ipmi_command.extend(ipmi_cmd)
 
-        print(", ".join(ipmi_command))        
+        # print(", ".join(ipmi_command)) #DEBUG       
 
         try:
             result = subprocess.run(ipmi_command, capture_output=True, text=True)
