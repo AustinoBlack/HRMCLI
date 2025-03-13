@@ -19,7 +19,10 @@
                 "Alias command for sudo chpasswd"
             ],
             "help_msg": [
-                "Use to chnage the default password for the pcscli user"
+                "Changes the password for the pcscli user.",
+                "You will be prompted to enter a new password.",
+                "Sample Usage:",
+                "pcscli change password"
             ]
         },
         "add node": {
@@ -28,7 +31,10 @@
                 "Prompts the user to add credentials for a new node"
             ],
             "help_msg": [
-                "pending"
+                "This command prompts the user to add a new node to the IPMI configuration.",
+                "You will be asked to enter the node's IP, username, and password.",
+                "Sample Usage:",
+                "pcscli add node"
             ]
         },
         "edit node": {
@@ -37,7 +43,10 @@
                 "Prompts the user to edit credentials for an existing node"
             ],  
             "help_msg": [
-                "pending"
+                "This command allows you to modify the credentials of an existing node.",
+                "You can change the IP, username, or password of the selected node.",
+                "Sample Usage:",
+                "pcscli edit node"
             ]
         },
         "remove node": {
@@ -46,25 +55,32 @@
                 "Prompts the user to remove an existing node from pcscli"
             ],
             "help_msg": [
-                "pending"
+                "Removes an existing node from the IPMI configuration.",
+                "You will be prompted to confirm the deletion before proceeding.",
+                "Sample Usage:",
+                "pcscli remove node"
             ]
         },
         "list nodes": {
             "syntax": "pcscli list node",
             "syntax_details": [
-                "Lists all nodes configured"
+                ""
             ],  
             "help_msg": [
-                "pending"
+                "Lists all currently configured IPMI nodes, displaying their index and IP address.",
+                "Sample Usage:",
+                "pcscli list nodes"
             ]
         },
         "status": {
             "syntax": "pcscli status",
             "syntax_details": [
-                "lists the stats of the system and pcscli"
+                ""
             ],  
             "help_msg": [
-                "pending"
+                "Displays the current status of PCSCLI, including system info and node configurations.",
+                "Sample Usage:",
+                "pcscli status"
             ]   
         },
         "backup config": {
@@ -73,7 +89,10 @@
                 "creates a backup of the ipmi config file"
             ],
             "help_msg": [
-                "pending"
+                "Creates a backup of the current IPMI configuration file.",
+                "Backups are stored in /opt/PCSCLI/backups/ with a timestamp.",
+                "Sample Usage:",
+                "pcscli backup config"
             ]
         },
         "restore config": {
@@ -82,7 +101,10 @@
                 "restores a backup of the ipmi config file"
             ],
             "help_msg": [
-                "pending"
+                "Restores a previously created backup of the IPMI configuration.",
+                "You will be prompted to select a backup file from available options.",
+                "Sample Usage:",
+                "pcscli restore config"
             ]
         },
         "test connection": {
@@ -188,8 +210,8 @@
             "help_msg": [
                 "Provides a list of available operations under the 'set' prefix.",
                 "List of available operations:",
-                "- power on",
-                "- power off",
+                "- sys power on",
+                "- sys power off",
                 "- sys led on",
                 "- sys led off",
                 "- sys sel clear"
