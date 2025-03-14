@@ -4,6 +4,12 @@ import os
 from datetime import datetime
 import shutil
 
+# ANSI color codes
+RESET = "\033[0m"
+GREEN = "\033[92m"
+YELLOW = "\033[93m"
+RED = "\033[91m"
+
 #---------------------- File Handlers ----------------------
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -64,6 +70,27 @@ def get_system_uptime():
         return result.stdout.strip().replace("up ", "")
     except Exception:
         return "Unknown"
+
+def get_usage_bar(usage_percent, bar_length=20):
+    """Generate an ASCII progress bar with color based on usage percentage."""
+    filled_blocks = int((usage_percent / 100) * bar_length)
+
+    # Set color based on usage level
+    if usage_percent < 50:
+        color = GREEN
+    elif usage_percent < 80:
+        color = YELLOW
+    else:
+        color = RED
+
+    return f"{color}[{'█' * filled_blocks}{'-' * (bar_length - filled_blocks)}] {usage_percent}%{RESET}"
+
+def get_disk_usage():
+    """Get disk usage and represent it as a colored bar."""
+    total, used, free = shutil.disk_usage("/")
+    used_percent = (used / total) * 100
+    return f"Disk: {get_usage_bar(used_percent)}, {free // (1024 ** 3)}GB free"
+
 
 def get_last_backup():
     """Finds the most recent backup timestamp."""
@@ -215,6 +242,7 @@ def pcscli_status():
     print(" ")
     print(f"{VERSION} - Status")
     print("-" * 22)
+    print(get_disk_usage())
     print(f"Nodes Configured: {get_node_count()}")
     print(f"Serial Console: {get_serial_status()}")
     print(f"Network: {get_network_info()} (eth0)")
