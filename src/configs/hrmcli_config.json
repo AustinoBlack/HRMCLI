@@ -15,7 +15,7 @@
         "Enter 'help' to get started\n"
     ],
 
-    "version": "0.8",
+    "version": "0.9",
 
     "about": [
         "HRMCLI - Homelab Rack Manager Command Line Interface",
