@@ -45,6 +45,11 @@ def display_help():
     for line in hlp:
         print(line)
 
+def clear_history():
+    histfile = os.path.expanduser("~/.hrmcli_history")
+    if os.path.exists(histfile):
+        os.remove(histfile)
+
 def complete(text, state):
     """Tab autocomplete function. Suggests commands based on user input."""
     options = []
@@ -134,11 +139,9 @@ def main():
         except (KeyboardInterrupt, EOFError):
             print("\nExiting HRMCLI...")
             time.sleep(2)
+            clear_history()
             clear_screen()
             break
-
-    # Save history to file
-    readline.write_history_file(history_file)
 
 if __name__ == "__main__":
     main()
