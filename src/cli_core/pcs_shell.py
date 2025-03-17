@@ -96,7 +96,7 @@ def main():
     setup_readline()
    
     # Startup Sequence
-    print("starting PCSCLI...")
+    print("starting HRMCLI...")
     time.sleep(2)
     clear_screen()
     display_logo()
