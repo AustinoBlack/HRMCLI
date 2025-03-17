@@ -3,32 +3,32 @@
 set -e  # Exit immediately if a command exits with a non-zero status
 
 # Default username and password
-HCSCLI_USER="hcscli"
-DEFAULT_PASSWORD="hcscli"
-INSTALL_DIR="/opt/HCSCLI"
-REPO_URL="https://github.com/AustinoBlack/HCSCLI.git"
+HRMCLI_USER="hrmcli"
+DEFAULT_PASSWORD="hrmcli"
+INSTALL_DIR="/opt/HRMCLI"
+REPO_URL="https://github.com/AustinoBlack/HRMCLI.git"
 DEFAULT_IP="172.16.0.1/29"
 
-# Create the Hcscli user if it does not exist
-if ! id "$HCSCLI_USER" &>/dev/null; then
-    echo "Creating user: $HCSCLI_USER"
-    useradd -m -s /bin/bash "$HCSCLI_USER"
-    echo "$HCSCLI_USER:$DEFAULT_PASSWORD" | chpasswd
+# Create the HrmCli user if it does not exist
+if ! id "$HRMCLI_USER" &>/dev/null; then
+    echo "Creating user: $HRMCLI_USER"
+    useradd -m -s /bin/bash "$HRMCLI_USER"
+    echo "$HRMCLI_USER:$DEFAULT_PASSWORD" | chpasswd
 fi
 
 # Install required dependencies
 apt update
 apt install -y ipmitool python3 python3-pip git
 
-# Clone HCSCLI repository
+# Clone HRMCLI repository
 if [ ! -d "$INSTALL_DIR" ]; then
-    echo "Cloning PCSCLI repository into $INSTALL_DIR"
+    echo "Cloning HRMCLI repository into $INSTALL_DIR"
     git clone "$REPO_URL" "$INSTALL_DIR"
-    chown -R "$HCSCLI_USER":"$HCSCLI_USER" "$INSTALL_DIR"
+    chown -R "$HRMCLI_USER":"$HRMCLI_USER" "$INSTALL_DIR"
 fi
 
 # Add auto-launch to bashrc for the default user
-BASHRC_FILE="/home/$HCSCLI_USER/.bashrc"
+BASHRC_FILE="/home/$HRMCLI_USER/.bashrc"
 cat <<EOL >> "$BASHRC_FILE"
 
 # Auto-launch pcs_shell for the pcscli user and exit on exit
@@ -36,7 +36,7 @@ if [ -t 0 ]; then
     USER="user"
     LAST_LOGIN=\$(last -i \$USER | head -1 | awk '{print \$6, \$7, \$8, \$9 " from " \$3}')
     echo "Last login: \$LAST_LOGIN"
-    python3 /opt/HCSCLI/src/cli_core/pcs_shell.py
+    python3 /opt/HRMCLI/src/cli_core/pcs_shell.py
     exit
 fi
 
@@ -84,7 +84,7 @@ sudo raspi-config nonint do_serial 0
 stty -F /dev/USB0 115200
 
 # Script complete
-echo "HCSCLI setup complete! Log in as '$HCSCLI_USER' with password '$DEFAULT_PASSWORD' to start using HCSCLI."
+echo "HRMCLI setup complete! Log in as '$HRMCLI_USER' with password '$DEFAULT_PASSWORD' to start using HRMCLI."
 echo "Static IP set to $CUSTOM_IP."
 echo "System will reboot in 10 seconds."
 sleep 10
