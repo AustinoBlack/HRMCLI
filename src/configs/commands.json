@@ -120,11 +120,22 @@
                 "hrmcli test connection -i 1"
             ]  
         },
+        "update": {
+            "syntax": "hrmcli update",
+            "syntax_details": [
+                 "Runs 'git pull' to fetch and apply the latest updates from the repository."
+            ],
+            "help_msg": [
+                "This command pulls the latest changes from the official repository and applies them.",
+                "Ensure HRMCLI was installed via 'git clone' for this command to work."
+            ]
+        },
         "general_help": {
             "syntax": "hrmcli [operation] {-help}",
             "help_msg": [
                 "This command provides a list of available operations under the 'hrmcli' prefix.",
                 "List of available operations:",
+                "- update",
                 "- status",
                 "- cmd",
                 "- change password",

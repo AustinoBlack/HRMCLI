@@ -1,6 +1,6 @@
 from pcs_help import show_help, show_general_help
 from pcs_action import execute_command
-from pcs_admin import change_password, add_node, edit_node, remove_node, list_nodes, pcscli_status, backup_config, restore_config
+from pcs_admin import change_password, add_node, edit_node, remove_node, list_nodes, pcscli_status, backup_config, restore_config, update
 
 def parse_command(user_input):
     """
@@ -35,7 +35,9 @@ def parse_command(user_input):
         if args[0] == "cmd":
             node_index = args[-1]
             command = args[2:-2]
-            execute_command(prefix, command, node_index)            
+            execute_command(prefix, command, node_index)
+        elif " ".join(args) == "update":
+            update()            
         elif " ".join(args) == "change password":
             change_password()
         elif " ".join(args) == "add node":

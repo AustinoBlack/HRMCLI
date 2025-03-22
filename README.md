@@ -24,6 +24,7 @@ HRMCLI is a data-driven command-line interface designed for homelab environments
 ```
 wget -O - https://raw.githubusercontent.com/AustinoBlack/hrmcli/main/setup.sh | bash
 ```
+sudo ./setup.sh
 
 ### Basic Usage
 Once installed, use the following command structure:

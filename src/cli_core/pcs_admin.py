@@ -122,6 +122,17 @@ def list_backups():
 
 #---------------------- ADMIN Functions ----------------------
 
+def update():
+    """Updates HRMCLI by pulling the latest changes from the repository."""
+    repo_path = "/opt/HRMCLI/"
+    try:
+        print("Updating HRMCLI...")
+        output = subprocess.run(["git", "-C", repo_path, "pull"], capture_output=True, text=True)
+        print(output.stdout)
+        print("HRMCLI has been updated successfully.")
+    except Exception as e:
+        print(f"Error updating HRMCLI: {e}")
+
 def change_password():
     """Allows the user to change the password for the pcscli user."""
         
@@ -202,7 +213,7 @@ def edit_node():
     print(f"Node {node_index} successfully updated!")
 
 def remove_node():
-   # Get node index to remove
+    # Get node index to remove
     node_index = input("Enter node index to remove: ").strip()
 
     # Check if the node exists
