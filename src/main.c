@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "hrmcli.h"
-#include "cJSON.h"
+#include "cjson/cJSON.h"
 
 // Load JSON config
 cJSON* load_config(const char* filename) {
