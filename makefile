@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
-LIBS = -lcjson
+LIBS = -lcjson -lreadline
 SRC = $(wildcard src/*.c)
 OBJ = $(SRC:.c=.o)
 TARGET = hrmcli
