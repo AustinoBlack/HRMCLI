@@ -52,9 +52,10 @@ char** cli_completion(const char* text, int start, int end) {
 void start_cli() {
     rl_attempted_completion_function = cli_completion;
 
-    printf("Welcome to HRMCLi interactive shell.\n");
+    sleep(2);
+    printf("\n\nWelcome to HRMCLi interactive shell.\n");
     printf("Type 'help' for a list of commands.\n");
-
+     
     while (1) {
         char* input = readline("HRMCLi> ");
 
@@ -83,5 +84,5 @@ void start_cli() {
         free(input);
     }
 
-    printf("Exiting HRMCLi.\n");
+    //printf("Exiting HRMCLi.\n");
 }

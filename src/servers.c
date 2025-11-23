@@ -8,7 +8,7 @@ server_t servers[32];
 int num_servers = 0;
 
 int load_servers(const char* file_path) {
-    printf("DEBUG: Trying to open file '%s'\n", file_path);
+    //printf("DEBUG: Trying to open file '%s'\n", file_path);
     FILE* f = fopen(file_path, "r");
     if (!f) {
         perror("DEBUG: fopen failed");
@@ -24,14 +24,14 @@ int load_servers(const char* file_path) {
     fclose(f);
 
     if (read == 0) {
-        printf("DEBUG: fread read 0 bytes\n");
+        //printf("DEBUG: fread read 0 bytes\n");
         free(buffer);
         return -1;
     }
 
     cJSON* json = cJSON_Parse(buffer);
     if (!json) {
-        printf("DEBUG: cJSON_Parse failed\n");
+        //printf("DEBUG: cJSON_Parse failed\n");
         free(buffer);
         return -1;
     }

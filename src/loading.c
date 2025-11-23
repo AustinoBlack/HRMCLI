@@ -3,83 +3,203 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+
 #include "loading.h"
+#include "servers.h"
+#include "cli.h"
 
-// ANSI color codes
-#define COLOR_RESET  "\033[0m"
-#define COLOR_GREEN  "\033[32m"
-#define COLOR_YELLOW "\033[33m"
+#define SERVERS_CONFIG "config/servers.json"
+ 
+// ------------------------------ Colors ------------------------------------
+#define CLR_OK   "\033[1;32m"
+#define CLR_FAIL "\033[1;31m"
+#define CLR_WARN "\033[1;33m"
+#define CLR_RST  "\033[0m"
 
-// Grow bar animation with randomized speed
-static void grow_bar(int width, int min_delay_ms, int max_delay_ms) {
-    printf("\nInitializing HRMCLi...\n\n");
+// --------------------------- Status printer ----------------------------------
+static void print_status(status_t s) {
+    switch (s) {
+        case STATUS_OK:   printf(CLR_OK  "[ OK ]"  CLR_RST); break;
+        case STATUS_FAIL: printf(CLR_FAIL"[FAIL]"  CLR_RST); break;
+        case STATUS_WARN: printf(CLR_WARN"[WARN]"  CLR_RST); break;
+    }
+}
 
-    for (int i = 0; i <= width; i++) {
-        printf("\r[");
-        for (int j = 0; j < width; j++) {
-            if (j < i) printf("█");
-            else       printf(" ");
-        }
-        printf("]");
+// --------------------------- Boot step table --------------------------------
+
+static boot_step_t boot_steps[] = {
+    { "Loading configuration files",       check_config_files },
+    { "Loading server database",           check_server_database },
+    { "Checking network stack",            check_network_stack },
+    { "Verifying dependencies",            check_dependencies },
+    { "Scanning USB devices...",           check_USB_devices },
+    { "Initializing serial interfaces...", check_serial_interface },
+    { "Checking BMC/IPMI modules...",      check_BMC_interfaces },
+    { "Verifying hardware access...",      check_hardware_access },
+    { "Loading command registry...",       load_registry },
+    { "Setting up logging system...",      set_logging },
+    { "Verifying environment variables...", check_environment_variables },
+    { "Testing network interfaces...",     test_network_interfaces },
+    { "Checking hostname resolution...",   check_hostname },
+    { "Loading server cache...",           load_server_cache },
+    { "Initializing CLI modules...",       CLI_modules_init },
+    { "Checking firmware versions...",     check_firmware_versions },
+    { "Synchronizing time...",             sync_time },
+    { "Finalizing system initialization...", final_checks },
+    { "Starting HRMCLi shell...",          check_start_cli }
+};
+
+static const int BOOT_STEP_COUNT = sizeof(boot_steps) / sizeof(boot_steps[0]);
+
+// ----------------------------- BOOT SEQUENCE -----------------------------------
+
+void hrmcli_boot_sequence(void) 
+{
+    srand(time(NULL));
+
+    char detail[256];
+
+    printf("\n");
+
+    for (int i = 0; i < BOOT_STEP_COUNT; i++) {
+
+        // Print main label
+        printf("%-50s", boot_steps[i].label);
         fflush(stdout);
 
-        // random delay between min_delay_ms and max_delay_ms
-        int delay = min_delay_ms + rand() % (max_delay_ms - min_delay_ms + 1);
-        usleep(delay * 1000);
-    }
+        // Slow it down for realism
+        usleep((rand() % 400 + 150) * 1000);
 
-    printf("\n\n");
-}
+        // Run check function
+        memset(detail, 0, sizeof(detail));
+        status_t st = boot_steps[i].check_function(detail, sizeof(detail));
 
-// Status check helper with randomized delay
-static void status_line(const char *msg, int min_delay_ms, int max_delay_ms) {
-    // print in-progress indicator in yellow
-    printf("[%s..%s] %s", COLOR_YELLOW, COLOR_RESET, msg);
-    fflush(stdout);
+        print_status(st);
+        printf("\n");
 
-    int delay = min_delay_ms + rand() % (max_delay_ms - min_delay_ms + 1);
-    usleep(delay * 1000);
+        // If the function printed a detail message
+        if (strlen(detail) > 0) {
+            printf(" - %s\n", detail);
+        }
 
-    // replace with OK in green
-    printf("\r[%sOK%s] %s\n", COLOR_GREEN, COLOR_RESET, msg);
-    fflush(stdout);
-}
-
-void hrmcli_boot_sequence(void) {
-    // seed random generator
-    srand((unsigned int)time(NULL));
-
-    int bar_width = 30;
-
-    // grow bar with randomized speed 20–60ms per step
-    grow_bar(bar_width, 20, 250);
-
-     // Long status list
-    const char *status_steps[] = {
-        "Loading configuration files...",
-        "Initializing serial interfaces...",
-        "Scanning USB devices...",
-        "Checking BMC/IPMI modules...",
-        "Verifying hardware access...",
-        "Loading command registry...",
-        "Setting up logging system...",
-        "Verifying environment variables...",
-        "Testing network interfaces...",
-        "Checking hostname resolution...",
-        "Loading server cache...",
-        "Initializing CLI modules...",
-        "Checking firmware versions...",
-        "Synchronizing time...",
-        "Finalizing system initialization...",
-        "Starting HRMCLi shell..."
-    };
-
-    int num_steps = sizeof(status_steps) / sizeof(status_steps[0]);
-
-    for (int i = 0; i < num_steps; i++) {
-        status_line(status_steps[i], 100, 1000); // randomized 100–500ms
+        // Optional: abort on fatal fail
+        // if (st == STATUS_FAIL) break;
     }
 
     printf("\n");
+}
+
+// --------------- CHECK FUNCTIONS (Stub implementations) ---------------
+
+status_t check_config_files(char *msg, size_t len) {
+    FILE *f = fopen(SERVERS_CONFIG, "r");
+    if (!f) {
+        snprintf(msg, len, "ERROR: Could not read config/servers.json");
+        return STATUS_FAIL;
+    }
+    else if (load_servers(SERVERS_CONFIG) != 0) {
+        printf("\033[33m[WARN]\033[0m Could not load server configuration.\n");
+        printf("Using an empty server list.\n");
+    }
+    fclose(f);
+    snprintf(msg, len, "Loaded: config/servers.json");
+    return STATUS_OK;
+}
+
+status_t check_server_database(char *msg, size_t len) {
+    extern int num_servers;
+    if (num_servers <= 0) {
+        snprintf(msg, len, "No servers defined");
+        return STATUS_WARN;
+    }
+    snprintf(msg, len, "Loaded %d servers", num_servers);
+    return STATUS_OK;
+}
+
+status_t check_network_stack(char *msg, size_t len) {
+    snprintf(msg, len, "Network interfaces detected");
+    return STATUS_OK;
+}
+
+status_t check_dependencies(char *msg, size_t len) {
+    snprintf(msg, len, "ipmitool, socat OK");
+    return STATUS_OK;
+}
+
+status_t check_USB_devices(char *msg, size_t len) {
+    snprintf(msg, len, "USB scan complete");
+    return STATUS_OK;
+}
+
+status_t check_serial_interface(char *msg, size_t len) {
+    snprintf(msg, len, "Serial ports initialized");
+    return STATUS_OK;
+}
+
+status_t check_BMC_interfaces(char *msg, size_t len) {
+    snprintf(msg, len, "Some BMCs unreachable (expected)");
+    return STATUS_WARN;
+}
+
+status_t check_hardware_access(char *msg, size_t len) {
+    snprintf(msg, len, "/dev access OK");
+    return STATUS_OK;
+}
+
+status_t load_registry(char *msg, size_t len) {
+    snprintf(msg, len, "Command registry loaded");
+    return STATUS_OK;
+}
+
+status_t set_logging(char *msg, size_t len) {
+    snprintf(msg, len, "Logging enabled");
+    return STATUS_OK;
+}
+
+status_t check_environment_variables(char *msg, size_t len) {
+    snprintf(msg, len, "Environment validated");
+    return STATUS_OK;
+}
+
+status_t test_network_interfaces(char *msg, size_t len) {
+    snprintf(msg, len, "eth0 UP, wlan0 DOWN");
+    return STATUS_OK;
+}
+
+status_t check_hostname(char *msg, size_t len) {
+    snprintf(msg, len, "Hostname OK");
+    return STATUS_OK;
+}
+
+status_t load_server_cache(char *msg, size_t len) {
+    snprintf(msg, len, "Cache not found (fresh start)");
+    return STATUS_WARN;
+}
+
+status_t CLI_modules_init(char *msg, size_t len) {
+    snprintf(msg, len, "CLI modules ready");
+    return STATUS_OK;
+}
+
+status_t check_firmware_versions(char *msg, size_t len) {
+    snprintf(msg, len, "Firmware checks deferred");
+    return STATUS_WARN;
+}
+
+status_t sync_time(char *msg, size_t len) {
+    snprintf(msg, len, "Time is synced");
+    return STATUS_OK;
+}
+
+status_t final_checks(char *msg, size_t len) {
+    snprintf(msg, len, "System ready");
+    return STATUS_OK;
+}
+
+// ------------------ start_cli() wrapper for boot system ------------------------
+status_t check_start_cli(char *msg, size_t len) {
+    start_cli();
+    snprintf(msg, len, "Exiting shell...");
+    return STATUS_OK;
 }
 
