@@ -3,42 +3,27 @@
 #include "cli.h"
 #include "hrmcli.h"
 #include "cjson/cJSON.h"
+#include "banner.h"
+#include "loading.h"
+#include "servers.h"
 
-// Load JSON config
-cJSON* load_config(const char* filename) {
-    FILE* file = fopen(filename, "r");
-    if (!file) {
-        fprintf(stderr, "Failed to open config file: %s\n", filename);
-        return NULL;
-    }
-
-    fseek(file, 0, SEEK_END);
-    long length = ftell(file);
-    rewind(file);
-
-    char* data = malloc(length + 1);
-    fread(data, 1, length, file);
-    data[length] = '\0';
-    fclose(file);
-
-    cJSON* json = cJSON_Parse(data);
-    if (!json) {
-        fprintf(stderr, "Error parsing JSON config\n");
-        free(data);
-        return NULL;
-    }
-
-    free(data);
-    return json;
-}
+#define SERVER_CONFIG "config/servers.json"
 
 int main() {
-    printf("Loading config: %s\n", CONFIG_FILE);
-    cJSON* config = load_config(CONFIG_FILE);
-    if (!config) {
-        printf("Warning: could not load config, using defaults.\n");
-    }
+    system("clear");
+    hrmcli_banner(0);
+    sleep(1);
+    printf("Loading server config: %s\n", SERVER_CONFIG);
 
+    // Load server list
+    if (load_servers(SERVER_CONFIG) != 0) {
+        printf("\033[33m[WARN]\033[0m Could not load server configuration.\n");
+        printf("Using an empty server list.\n");
+    } else {
+        printf("\033[32m[OK]\033[0m Loaded %d servers.\n", num_servers);
+    } 
+
+    hrmcli_boot_sequence();
     start_cli();
 
     return 0;

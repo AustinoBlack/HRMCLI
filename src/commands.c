@@ -16,7 +16,7 @@ void handle_command(const char* input) {
         printf("\033[2J\033[H"); 
     }
     else if (strcmp(input, "list") == 0) {
-        printf("Server list (placeholder): server1, server2\n");
+        list_servers();
     }
     else if (strncmp(input, "ping ", 5) == 0) {
         char* server_name = (char*)(input + 5);
