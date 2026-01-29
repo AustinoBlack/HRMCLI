@@ -53,6 +53,7 @@ void start_cli() {
     rl_attempted_completion_function = cli_completion;
 
     sleep(2);
+    system("clear");
     printf("\n\nWelcome to HRMCLi interactive shell.\n");
     printf("Type 'help' for a list of commands.\n");
      
